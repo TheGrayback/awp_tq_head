@@ -5,14 +5,16 @@ import DeleteButton from "./DeleteButton";
 export const Notes = ({ notes, onRemove }) => {
   return (
     <table className="table table-bordered table-hover table-sm">
-      {/* <thead>
-        <th colSpan={4}>
-          AA
-        </th>
-      </thead> */}
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">title</th>
+          <th scope="col">date</th>
+          <th scope="col">buttons</th>
+        </tr>
+      </thead>
       <tbody>
         {notes.map((note, index) => (
-          //<li className="list-group-item note" key={note.id}>
           <tr key={note.id}>
             <td>{index + 1}</td>
             <td>{note.title}</td>
@@ -21,16 +23,9 @@ export const Notes = ({ notes, onRemove }) => {
               <DeleteButton
                 WhatRemove={{ id: note.id, removeFunction: onRemove }}
               />
-              <ChangeButton/>
+              <ChangeButton />
             </td>
           </tr>
-
-          // {/* <div>
-          //   <strong>{note.title}</strong>
-          //   <span>{note.date}</span>
-          // </div> */}
-
-          //</li>
         ))}
       </tbody>
     </table>

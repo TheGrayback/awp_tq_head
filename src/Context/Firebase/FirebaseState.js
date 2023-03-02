@@ -21,6 +21,7 @@ export const FirebaseState = ({ children }) => {
     const payload = Object.keys(res.data).map((key) => {
       return { ...res.data[key], id: key };
     });
+    console.log(payload);
     dispatch({
       type: ACTION_FETCH,
       payload,
@@ -42,6 +43,18 @@ export const FirebaseState = ({ children }) => {
     } catch (e) {
       throw new Error(e.message);
     }
+  };
+
+  const changeNote = async (id) => {
+    await axios.delete(`${url}/notes/${id}.json`);
+    dispatch({
+      type: REMOVE_NOTE,
+      payload: id,
+    });
+    dispatch({
+      type: ADD_NOTE,
+      payload: id
+    })
   };
 
   const removeNote = async (id) => {
