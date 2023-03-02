@@ -2,7 +2,7 @@ import React, { Fragment, useState, useContext } from "react";
 import { AlertContext } from "../Context/Alert/AlertContext";
 import { FirebaseContext } from "../Context/Firebase/firebaseContext";
 
-export const Form = ({ filter, setFilter, sortOptions }) => {
+export const Form = ({ filter, setFilter, sortOptions, value, onChange }) => {
   const [addValue, setAddValue] = useState("");
 
   const alert = useContext(AlertContext);
@@ -57,10 +57,16 @@ export const Form = ({ filter, setFilter, sortOptions }) => {
           />
         </div>
       </form>
-      <select class="form-select form-select-sm mx-3 w-25">
+      <select
+        className="form-select form-select-sm mx-3 w-25"
+        value={filter.sortQuery}
+        onChange={(e) => setFilter({ ...filter, sortQuery: e.target.value })}
+      >
         <option disabled>Open this select menu</option>
         {sortOptions.map((option) => (
-          <option value={option.value}>{option.name}</option>
+          <option key={option.value} value={option.value}>
+            {option.name}
+          </option>
         ))}
       </select>
     </div>
