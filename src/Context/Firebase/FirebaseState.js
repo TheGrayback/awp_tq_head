@@ -21,7 +21,6 @@ export const FirebaseState = ({ children }) => {
     const payload = Object.keys(res.data).map((key) => {
       return { ...res.data[key], id: key };
     });
-    console.log(payload);
     dispatch({
       type: ACTION_FETCH,
       payload,
@@ -45,16 +44,21 @@ export const FirebaseState = ({ children }) => {
     }
   };
 
-  const changeNote = async (id) => {
-    await axios.delete(`${url}/notes/${id}.json`);
-    dispatch({
-      type: REMOVE_NOTE,
-      payload: id,
-    });
-    dispatch({
-      type: ADD_NOTE,
-      payload: id
-    })
+  const changeNote = async (id, title) => {
+    const note = {
+      title,
+      date: new Date()/*.toJSON()*/,
+    };
+    try {
+      const res = await axios.patch(`${url}/notes/${id}.json`, note);
+      const payload = Object.keys(res.data).map((key) => {
+        return { ...res.data[key], id: key };
+      });
+      dispatch({ type: ADD_NOTE, payload });
+      fetchNotes();
+    } catch (e) {
+      throw new Error(e.message);
+    }
   };
 
   const removeNote = async (id) => {
@@ -72,6 +76,7 @@ export const FirebaseState = ({ children }) => {
         addNote,
         removeNote,
         fetchNotes,
+        changeNote,
         loading: state.loading,
         notes: state.notes,
       }}

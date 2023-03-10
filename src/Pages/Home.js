@@ -8,13 +8,18 @@ import React, {
 import { Form } from "../Components/Form";
 import Loader from "../Components/Loader";
 import NoteList from "../Components/NoteList";
-import { Notes } from "../Components/Notes";
 import { FirebaseContext } from "../Context/Firebase/firebaseContext";
+import ModalForm from "../Components/Modal/ModalForm";
+import CreatePost from "../Components/CreatePost";
+import ChangePost from "../Components/ChangePost";
 
 export const Home = () => {
   const { loading, notes, fetchNotes, removeNote } =
     useContext(FirebaseContext);
   const [filter, setFilter] = useState({ sortQuery: "", searchQuery: "" });
+  const [isAddVisible, setAddVisible] = useState(false);
+  const [isChangeVisible, setChangeVisible] = useState(false);
+  const [postId, setPostId] = useState('');
 
   useEffect(() => {
     fetchNotes();
@@ -43,6 +48,13 @@ export const Home = () => {
 
   return (
     <Fragment>
+      <ModalForm isVisible={isAddVisible} setVisible={setAddVisible}>
+        <CreatePost setModalState={setAddVisible} />
+      </ModalForm>
+      <ModalForm isVisible={isChangeVisible} setVisible={setChangeVisible}>
+        <ChangePost setModalState={setChangeVisible} postId={postId}/>
+      </ModalForm>
+
       <Form
         filter={filter}
         setFilter={setFilter}
@@ -52,11 +64,24 @@ export const Home = () => {
           { value: "date", name: "Сортування за date" },
         ]}
       />
+      <button
+        className="btn btn-success mx-3"
+        onClick={() => {
+          setAddVisible(true);
+        }}
+      >
+        Create Post
+      </button>
       <hr />
       {loading ? (
         <Loader />
       ) : (
-        <NoteList notes={searchedNotes} removeNote={removeNote} />
+        <NoteList
+          notes={searchedNotes}
+          removeNote={removeNote}
+          setChangeVisible={setChangeVisible}
+          setPostId={setPostId}
+        />
       )}
     </Fragment>
   );

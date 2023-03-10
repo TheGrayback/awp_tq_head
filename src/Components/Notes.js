@@ -2,7 +2,7 @@ import React from "react";
 import ChangeButton from "./ChangeButton";
 import DeleteButton from "./DeleteButton";
 
-export const Notes = ({ notes, onRemove }) => {
+export const Notes = ({ notes, onRemove, setChangeVisible, setPostId }) => {
   return (
     <table className="table table-bordered table-hover table-sm">
       <thead>
@@ -10,7 +10,6 @@ export const Notes = ({ notes, onRemove }) => {
           <th scope="col">ID</th>
           <th scope="col">title</th>
           <th scope="col">date</th>
-          <th scope="col">buttons</th>
         </tr>
       </thead>
       <tbody>
@@ -19,12 +18,10 @@ export const Notes = ({ notes, onRemove }) => {
             <td>{index + 1}</td>
             <td>{note.title}</td>
             <td>{note.date}</td>
-            <td>
-              <DeleteButton
-                WhatRemove={{ id: note.id, removeFunction: onRemove }}
-              />
-              <ChangeButton />
-            </td>
+            <DeleteButton
+              WhatRemove={{ id: note.id, removeFunction: onRemove }}
+            />
+            <ChangeButton setChangeVisible={setChangeVisible} setPostId={setPostId} id={note.id}/>
           </tr>
         ))}
       </tbody>

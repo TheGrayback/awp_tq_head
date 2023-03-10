@@ -1,29 +1,29 @@
-import React, { Fragment, useState, useContext } from "react";
-import { AlertContext } from "../Context/Alert/AlertContext";
-import { FirebaseContext } from "../Context/Firebase/firebaseContext";
+import React from "react";
+// import { AlertContext } from "../Context/Alert/AlertContext";
+// import { FirebaseContext } from "../Context/Firebase/firebaseContext";
 
-export const Form = ({ filter, setFilter, sortOptions, value, onChange }) => {
-  const [addValue, setAddValue] = useState("");
+export const Form = ({ filter, setFilter, sortOptions }) => {
+  // const [addValue, setAddValue] = useState("");
 
-  const alert = useContext(AlertContext);
-  const firebase = useContext(FirebaseContext);
+  // const alert = useContext(AlertContext);
+  // const firebase = useContext(FirebaseContext);
 
-  const submitAddNoteHandler = (event) => {
-    event.preventDefault();
-    if (addValue.trim()) {
-      firebase
-        .addNote(addValue.trim())
-        .then(() => {
-          alert.show("Created", "success");
-        })
-        .catch(() => {
-          alert.show("Not created", "danger");
-        });
-      setAddValue(addValue);
-    } else {
-      alert.show("No note name!");
-    }
-  };
+  // const submitAddNoteHandler = (event) => {
+  //   event.preventDefault();
+  //   if (addValue.trim()) {
+  //     firebase
+  //       .addNote(addValue.trim())
+  //       .then(() => {
+  //         alert.show("Created", "success");
+  //       })
+  //       .catch(() => {
+  //         alert.show("Not created", "danger");
+  //       });
+  //     setAddValue(addValue);
+  //   } else {
+  //     alert.show("No note name!");
+  //   }
+  // };
 
   const searchBar = (event) => {
     event.preventDefault();
@@ -31,7 +31,7 @@ export const Form = ({ filter, setFilter, sortOptions, value, onChange }) => {
 
   return (
     <div className="my-3">
-      <form onSubmit={submitAddNoteHandler}>
+      {/* <form onSubmit={submitAddNoteHandler}>
         <div className="form-group mx-3">
           <input
             type={"text"}
@@ -41,7 +41,7 @@ export const Form = ({ filter, setFilter, sortOptions, value, onChange }) => {
             onChange={(e) => setAddValue(e.target.value)}
           />
         </div>
-      </form>
+      </form> */}
       {/*можно поменять онСабмит на онЧендж и наоборот. Наверное при огромном кол-ве записей онЧендж будет
       лагать. Или нет?*/}
       <form onSubmit={searchBar}>
