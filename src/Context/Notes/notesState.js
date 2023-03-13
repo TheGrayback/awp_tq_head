@@ -1,9 +1,7 @@
 // import React from 'react'
 // import {NotesContext} from './notesContext'
 
-// const notesState = () => {
-
-    
+// const notesState = ({children}) => {
 
 //     return (
 //         <NotesContext.Provider
@@ -16,5 +14,5 @@
 //         </NotesContext.Provider>
 //       );
 // }
- 
+
 // export default notesState;

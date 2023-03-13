@@ -1,20 +1,20 @@
-import { ACTION_FETCH, ADD_NOTE, REMOVE_NOTE, SHOW_LOADER } from "../types";
+import { ACTION_FETCH, ADD_DATA, REMOVE_DATA, SHOW_LOADER } from "../types";
 
 const handlers = {
   DEFAULT: (state) => state,
   [SHOW_LOADER]: (state) => ({ ...state, loading: true }),
-  [ADD_NOTE]: (state, { payload }) => ({
+  [ADD_DATA]: (state, { payload }) => ({
     ...state,
-    notes: [...state.notes, ...payload],
+    data: [...state.data, ...payload],
   }),
   [ACTION_FETCH]: (state, { payload }) => ({
     ...state,
-    notes: payload,
+    data: payload,
     loading: false,
   }),
-  [REMOVE_NOTE]: (state, { payload }) => ({
+  [REMOVE_DATA]: (state, { payload }) => ({
     ...state,
-    notes: state.notes.filter((note) => note.id !== payload),
+    data: state.data.filter((data) => data.id !== payload),
   }),
 };
 

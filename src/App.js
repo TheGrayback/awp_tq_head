@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { About } from "./Pages/About";
-import { Home } from "./Pages/Home";
+import { WorkerTab } from "./Pages/WorkerTab";
 import { Navbar } from "./Components/Navbar";
 import { Alert } from "./Components/Alert";
 import AlertState from "./Context/Alert/AlertState";
@@ -16,9 +16,9 @@ function App() {
           <Navbar />
           <Alert />
           <Routes>
-            <Route path={"/"} exact element={<Home />} />
+            <Route path={"/workers"} exact element={<WorkerTab />} />
             <Route path={"/about"} element={<About />} />
-            <Route path={"/test"} element={<Test/>} />
+            <Route path={"/test"} element={<Test />} />
           </Routes>
         </Router>
       </AlertState>

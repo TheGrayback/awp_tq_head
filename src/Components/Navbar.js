@@ -1,6 +1,7 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import Clock from "./Clock";
+
 export const Navbar = () => (
   <nav className="navbar navbar-dark navbar-expand-lg bg-primary justify-content-between">
     <ul className="navbar-nav mx-2">
@@ -8,8 +9,8 @@ export const Navbar = () => (
         <div className="navbar-brand">Note App</div>
       </li>
       <li className="nav-item">
-        <NavLink className="nav-link" aria-current="page" to="/" exact="true">
-          Main
+        <NavLink className="nav-link" aria-current="page" to="/workers" exact="true">
+          Workers
         </NavLink>
       </li>
       <li className="nav-item">
@@ -25,7 +26,7 @@ export const Navbar = () => (
     </ul>
     <div>
       <h6 className="mx-3 text-light">
-        <Clock/>
+        <Clock />
       </h6>
     </div>
   </nav>

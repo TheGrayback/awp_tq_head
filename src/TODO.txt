@@ -1,3 +1,6 @@
 1. Change button (DONE)
 2. Grops of lists (maybe no?)
 3. Statistics
+4. Ascending/descending
+5. Fix sort/search+add problem
+6. Try to connect one data piece to another

@@ -1,18 +1,18 @@
 import React, { useState, useContext } from "react";
-import { FirebaseContext } from "../Context/Firebase/firebaseContext";
+import { FirebaseContext } from "../Context/Firebase/FirebaseContext";
 import { AlertContext } from "../Context/Alert/AlertContext";
 
-const CreatePost = ({ setModalState }) => {
+const CreateWorker = ({ setModalState }) => {
   const [addValue, setAddValue] = useState("");
 
   const alert = useContext(AlertContext);
   const firebase = useContext(FirebaseContext);
 
-  const submitAddNoteHandler = (event) => {
+  const submitAddDataHandler = (event) => {
     event.preventDefault();
     if (addValue.trim()) {
       firebase
-        .addNote(addValue.trim())
+        .addData(addValue.trim())
         .then(() => {
           alert.show("Created", "success");
         })
@@ -28,7 +28,7 @@ const CreatePost = ({ setModalState }) => {
 
   return (
     <div className="">
-      <form onSubmit={submitAddNoteHandler}>
+      <form onSubmit={submitAddDataHandler}>
         <div className="form-group mx-3">
           <input
             type={"text"}
@@ -43,4 +43,4 @@ const CreatePost = ({ setModalState }) => {
   );
 };
 
-export default CreatePost;
+export default CreateWorker;

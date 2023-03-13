@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
-import { FirebaseContext } from "../Context/Firebase/firebaseContext";
+import { FirebaseContext } from "../Context/Firebase/FirebaseContext";
 import { AlertContext } from "../Context/Alert/AlertContext";
 
-const ChangePost = ({ setModalState, postId }) => {
+const ChangeWorker = ({ setModalState, postId }) => {
   const [changeValue, setChangeValue] = useState("");
 
   const alert = useContext(AlertContext);
@@ -12,7 +12,7 @@ const ChangePost = ({ setModalState, postId }) => {
     event.preventDefault();
     if (changeValue.trim()) {
       firebase
-        .changeNote(postId, changeValue.trim())
+        .changeData(postId, changeValue.trim())
         .then(() => {
           alert.show("Created", "success");
         })
@@ -43,4 +43,4 @@ const ChangePost = ({ setModalState, postId }) => {
   );
 };
 
-export default ChangePost;
+export default ChangeWorker;

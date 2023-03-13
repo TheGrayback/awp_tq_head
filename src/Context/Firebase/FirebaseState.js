@@ -1,23 +1,24 @@
 import React, { useReducer } from "react";
-import { FirebaseContext } from "./firebaseContext";
-import { FirebaseReducer } from "./firebaseReducer";
+import { FirebaseContext } from "./FirebaseContext";
+import { FirebaseReducer } from "./FirebaseReducer";
 import axios from "axios";
-import { ACTION_FETCH, ADD_NOTE, REMOVE_NOTE, SHOW_LOADER } from "../types";
+import { ACTION_FETCH, ADD_DATA, REMOVE_DATA, SHOW_LOADER } from "../types";
 const url =
   "https://react-study-5a117-default-rtdb.europe-west1.firebasedatabase.app/";
+const catalog = "workers";
 
 export const FirebaseState = ({ children }) => {
   const initialState = {
-    notes: [],
+    data: [],
     loading: false,
   };
   const [state, dispatch] = useReducer(FirebaseReducer, initialState);
 
   const showLoader = () => dispatch({ type: SHOW_LOADER });
 
-  const fetchNotes = async () => {
+  const fetchData = async () => {
     showLoader();
-    const res = await axios.get(`${url}/notes.json`);
+    const res = await axios.get(`${url}/${catalog}.json`);
     const payload = Object.keys(res.data).map((key) => {
       return { ...res.data[key], id: key };
     });
@@ -27,44 +28,44 @@ export const FirebaseState = ({ children }) => {
     });
   };
 
-  const addNote = async (title) => {
-    const note = {
+  const addData = async (title) => {
+    const data = {
       title,
-      date: new Date()/*.toJSON()*/,
+      date: new Date() /*.toJSON()*/,
     };
     try {
-      const res = await axios.post(`${url}/notes.json`, note);
+      const res = await axios.post(`${url}/${catalog}.json`, data);
       const payload = Object.keys(res.data).map((key) => {
         return { ...res.data[key], id: key };
       });
-      dispatch({ type: ADD_NOTE, payload });
-      fetchNotes();
+      dispatch({ type: ADD_DATA, payload });
+      fetchData();
     } catch (e) {
       throw new Error(e.message);
     }
   };
 
-  const changeNote = async (id, title) => {
-    const note = {
+  const changeData = async (id, title) => {
+    const data = {
       title,
-      date: new Date()/*.toJSON()*/,
+      date: new Date() /*.toJSON()*/,
     };
     try {
-      const res = await axios.patch(`${url}/notes/${id}.json`, note);
+      const res = await axios.patch(`${url}/${catalog}/${id}.json`, data);
       const payload = Object.keys(res.data).map((key) => {
         return { ...res.data[key], id: key };
       });
-      dispatch({ type: ADD_NOTE, payload });
-      fetchNotes();
+      dispatch({ type: ADD_DATA, payload });
+      fetchData();
     } catch (e) {
       throw new Error(e.message);
     }
   };
 
-  const removeNote = async (id) => {
-    await axios.delete(`${url}/notes/${id}.json`);
+  const removeData = async (id) => {
+    await axios.delete(`${url}/${catalog}/${id}.json`);
     dispatch({
-      type: REMOVE_NOTE,
+      type: REMOVE_DATA,
       payload: id,
     });
   };
@@ -73,12 +74,12 @@ export const FirebaseState = ({ children }) => {
     <FirebaseContext.Provider
       value={{
         showLoader,
-        addNote,
-        removeNote,
-        fetchNotes,
-        changeNote,
+        addData: addData,
+        removeData: removeData,
+        fetchData: fetchData,
+        changeData: changeData,
         loading: state.loading,
-        notes: state.notes,
+        data: state.data,
       }}
     >
       {children}
