@@ -2,9 +2,9 @@ import React from "react";
 import ChangeButton from "./ChangeButton";
 import DeleteButton from "./DeleteButton";
 import { useContext } from "react";
-import { WorkersContext } from "../Context/Notes/WorkersContext";
+import { WorkersContext } from "../../Context/Notes/WorkersContext";
 
-export const Workers = () => {
+export const Reports = () => {
   const { data, removeData, setChangeVisible, setPostId } =
     useContext(WorkersContext);
   return (

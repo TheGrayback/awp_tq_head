@@ -1,19 +1,19 @@
 import React, { useReducer } from "react";
-import { FirebaseContext } from "./FirebaseContext";
-import { FirebaseReducer } from "./FirebaseReducer";
+import { ReportsFirebaseContext } from "./reportsFirebaseContext";
+import { ReportsFirebaseReducer } from "./reportsFirebaseReducer";
 import axios from "axios";
 import { ACTION_FETCH, ADD_DATA, REMOVE_DATA, SHOW_LOADER } from "../types";
 import GetService from "../../API/GetService";
 const url =
   "https://react-study-5a117-default-rtdb.europe-west1.firebasedatabase.app/";
-const catalog = "workers";
+const catalog = "reports";
 
-export const FirebaseState = ({ children }) => {
+export const ReportsFirebaseState = ({ children }) => {
   const initialState = {
     data: [],
     loading: false,
   };
-  const [state, dispatch] = useReducer(FirebaseReducer, initialState);
+  const [state, dispatch] = useReducer(ReportsFirebaseReducer, initialState);
 
   const showLoader = () => dispatch({ type: SHOW_LOADER });
 
@@ -29,11 +29,11 @@ export const FirebaseState = ({ children }) => {
     });
   };
 
-  const addData = async ({u_id, surname, name}) => {
+  const addData = async ({projectId, projectName, workerID}) => {
     const data = {
-      u_id,
-      surname,
-      name
+      projectId,
+      projectName,
+      workerID,
     };
     try {
       const res = await axios.post(`${url}/${catalog}.json`, data);
@@ -47,11 +47,11 @@ export const FirebaseState = ({ children }) => {
     }
   };
 
-  const changeData = async (id, {u_id, surname, name}) => {
+  const changeData = async (id, {projectId, projectName, workerID}) => {
     const data = {
-      u_id,
-      surname,
-      name
+      projectId,
+      projectName,
+      workerID,
     };
     try {
       const res = await axios.patch(`${url}/${catalog}/${id}.json`, data);
@@ -74,7 +74,7 @@ export const FirebaseState = ({ children }) => {
   };
 
   return (
-    <FirebaseContext.Provider
+    <ReportsFirebaseContext.Provider
       value={{
         showLoader,
         addData: addData,
@@ -86,6 +86,6 @@ export const FirebaseState = ({ children }) => {
       }}
     >
       {children}
-    </FirebaseContext.Provider>
+    </ReportsFirebaseContext.Provider>
   );
 };

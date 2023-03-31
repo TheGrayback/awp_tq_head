@@ -7,15 +7,16 @@ import React, {
 } from "react";
 import { SearchForm } from "../Components/SearchForm";
 import Loader from "../Components/Loader";
-import WorkersList from "../Components/WorkersList";
-import { FirebaseContext } from "../Context/Firebase/FirebaseContext";
+import ReportsList from "../Components/Reports/ReportsList";
+import { ReportsFirebaseContext } from "../Context/reportsFirebase/reportsFirebaseContext";
 import ModalForm from "../Components/Modal/ModalForm";
-import CreateWorker from "../Components/CreateWorker";
-import ChangeWorker from "../Components/ChangeWorker";
+import CreateReports from "../Components/Reports/CreateReports";
+import ChangeReports from "../Components/Reports/ChangeReports";
 import { WorkersContext } from "../Context/Notes/WorkersContext";
 
-export const WorkerTab = () => {
-  const { loading, data, fetchData, removeData } = useContext(FirebaseContext);
+export const ReportTab = () => {
+  const { loading, data, fetchData, removeData } =
+    useContext(ReportsFirebaseContext);
   const [filter, setFilter] = useState({
     sortQuery: "",
     searchQuery: "",
@@ -24,8 +25,6 @@ export const WorkerTab = () => {
   const [isAddVisible, setAddVisible] = useState(false);
   const [isChangeVisible, setChangeVisible] = useState(false);
   const [postId, setPostId] = useState("");
-  const [pagesCount, setPagesCount] = useState("0"); //пока что не нужен
-  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetchData();
@@ -52,19 +51,13 @@ export const WorkerTab = () => {
     }
   }, [filter.searchQuery, filter.searchKey, sortedData]);
 
-  const displayedItems = searchedData.slice((currentPage - 1) * 10, currentPage * 10);
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
-
   return (
     <Fragment>
       <ModalForm isVisible={isAddVisible} setVisible={setAddVisible}>
-        <CreateWorker setModalState={setAddVisible} />
+        <CreateReports setModalState={setAddVisible} />
       </ModalForm>
       <ModalForm isVisible={isChangeVisible} setVisible={setChangeVisible}>
-        <ChangeWorker setModalState={setChangeVisible} postId={postId} />
+        <ChangeReports setModalState={setChangeVisible} postId={postId} />
       </ModalForm>
 
       <SearchForm
@@ -87,29 +80,14 @@ export const WorkerTab = () => {
       <hr />
       <WorkersContext.Provider
         value={{
-          data: displayedItems,
+          data: searchedData,
           removeData: removeData,
           setChangeVisible: setChangeVisible,
           setPostId: setPostId,
         }}
       >
-        {loading ? <Loader /> : <WorkersList />}
+        {loading ? <Loader /> : <ReportsList />}
       </WorkersContext.Provider>
-      <div>
-        <button
-          disabled={currentPage === 1}
-          onClick={() => handlePageChange(currentPage - 1)}
-        >
-          Предыдущая страница
-        </button>
-        <button>{currentPage}</button>
-        <button
-          disabled={currentPage === Math.ceil(searchedData.length / 10)}
-          onClick={() => handlePageChange(currentPage + 1)}
-        >
-          Следующая страница
-        </button>
-      </div>
     </Fragment>
   );
 };

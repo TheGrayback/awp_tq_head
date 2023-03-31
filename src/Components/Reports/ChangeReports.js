@@ -1,15 +1,15 @@
 import React, { useState, useContext } from "react";
-import { FirebaseContext } from "../Context/Firebase/FirebaseContext";
-import { AlertContext } from "../Context/Alert/AlertContext";
+import { ReportsFirebaseContext } from "../../Context/reportsFirebase/reportsFirebaseContext";
+import { AlertContext } from "../../Context/Alert/AlertContext";
 
-const ChangeWorker = ({ setModalState, postId: postData }) => {
+const ChangeReports = ({ setModalState, postId: postData }) => {
   const [changeValue, setChangeValue] = useState({
     u_id: "",
     surname: "",
     name: "",
   });
   const alert = useContext(AlertContext);
-  const firebase = useContext(FirebaseContext);
+  const firebase = useContext(ReportsFirebaseContext);
 
   const submitChangeHandler = (event) => {
     event.preventDefault();
@@ -77,4 +77,4 @@ const ChangeWorker = ({ setModalState, postId: postData }) => {
   );
 };
 
-export default ChangeWorker;
+export default ChangeReports;
