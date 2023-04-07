@@ -1,85 +1,64 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useMemo } from "react";
 import { ReportsFirebaseContext } from "../../Context/reportsFirebase/reportsFirebaseContext";
 import { AlertContext } from "../../Context/Alert/AlertContext";
 import { databaseRef } from "../../firebase";
 import "firebase/firestore";
-import { ref, get } from "firebase/database";
+import {
+  ref,
+  get,
+} from "firebase/database";
 
-const CreateReports = ({ setModalState }) => {
-  const [addValue, setAddValue] = useState({
-    batchID: "", //ID партии деталей
-    blueprint: "",
-    detailsNumber: "",
-    //--WORKER--
-    workerID: "",
-    workerSurname: "",
-    workerDateStamp: "",
-    //--WORKER--
-    //--CONTROLLER--
-    controllerID: "",
-    controllerSurname: "",
-    controllerDateStamp: "",
-    //--CONTROLLER--
-    all: "",
-    completed: "",
-    defects: "",
+const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
+  const [changeValue, setChangeValue] = useState({
+    batchID: postData.batchID, //ID партии деталей
+    blueprint: postData.blueprint,
+    detailsNumber: postData.detailsNumber,
+    workerID: postData.workerID,
+    workerSurname: postData.workerSurname,
+    workerDateStamp: postData.workerDateStamp,
+    controller: postData.controller,
+    // {
+    //   controllerID: "",
+    //   surname: "",
+    // },
+    controllerDateStamp: postData.controllerDateStamp,
+    all: postData.all,
+    completed: postData.completed,
+    defects: postData.defects,
   });
+  console.log(postData, changeValue, isVisible);
+  
+  useMemo(() => {
+    if(isVisible === true) {
+      setChangeValue(postData);
+    }
+  },[postData, isVisible])
 
-  const alert = useContext(AlertContext);
-  const firebase = useContext(ReportsFirebaseContext);
+  const catalog = "workers";
 
   useEffect(() => {
     const fetchOptions = async () => {
-      const workersSnapshot = await get(ref(databaseRef, "workers"));
-      const controllersSnapshot = await get(ref(databaseRef, "controllers"));
-      const workersData = [];
-      const controllersData = [];
-      workersSnapshot.forEach((childSnapshot) => {
+      const snapshot = await get(ref(databaseRef, catalog));
+      const dataArray = [];
+      snapshot.forEach((childSnapshot) => {
         const { surname } = childSnapshot.val(); // получаем только свойство "surname"
         const id = childSnapshot.key; // получаем ключ объекта
-        workersData.push({ id, surname }); // добавляем объект в массив
+        dataArray.push({ id, surname }); // добавляем объект в массив
       });
-      controllersSnapshot.forEach((childSnapshot) => {
-        const { surname } = childSnapshot.val(); // получаем только свойство "surname"
-        const id = childSnapshot.key; // получаем ключ объекта
-        controllersData.push({ id, surname }); // добавляем объект в массив
-      });
-      setWorkerOptions(workersData);
-      setControllerOptions(controllersData);
-      console.log(workersData);
+      setOptions(dataArray);
+      console.log(dataArray);
     };
     fetchOptions();
   }, []);
 
-  const [workerOptions, setWorkerOptions] = useState([]);
-  const [selectedWorker, setSelectedWorker] = useState({
+  const [options, setOptions] = useState([]);
+  const [selectedItem, setSelectedOption] = useState({
     id: "",
-    surname: "",
+    surname: ""
   });
 
-  const [controllerOptions, setControllerOptions] = useState([]);
-  const [selectedController, setSelectedController] = useState({
-    id: "",
-    surname: "",
-  });
-
-  const handleWorkerOptionChange = (event) => {
-    const selectedItem = workerOptions.find(
-      (item) => item.id === event.target.value
-    );
-    setSelectedWorker(selectedItem);
-    addValue.workerID = selectedItem.id;
-    addValue.workerSurname = selectedItem.surname;
-  };
-
-  const handleControllerOptionChange = (event) => {
-    const selectedItem = controllerOptions.find(
-      (item) => item.id === event.target.value
-    );
-    setSelectedController(selectedItem);
-    addValue.controllerID = selectedItem.id;
-    addValue.controllerSurname = selectedItem.surname;
-  };
+  const alert = useContext(AlertContext);
+  const firebase = useContext(ReportsFirebaseContext);
 
   function checkObjectProperties(obj) {
     for (let prop in obj) {
@@ -95,29 +74,36 @@ const CreateReports = ({ setModalState }) => {
     return true; // Если все свойства заполнены, возвращаем true
   }
 
-  const submitAddDataHandler = (event) => {
+  const handleOptionChange = (event) => {
+    const selectedItem = options.find((item) => item.id === event.target.value);
+    setSelectedOption(selectedItem);
+    changeValue.workerID = selectedItem.id;
+    changeValue.workerSurname = selectedItem.surname;
+  };
+
+  const submitChangeHandler = async (event) => {
     event.preventDefault();
-    console.log(addValue);
-    if (checkObjectProperties(addValue)) {
-      firebase
-        .addData(addValue)
+    if (checkObjectProperties(changeValue)) {
+      console.log(changeValue);
+      await firebase
+        .changeData(postData.id, changeValue)
         .then(() => {
           alert.show("Created", "success");
         })
         .catch(() => {
           alert.show("Not created", "danger");
         });
-      setAddValue(addValue);
+      // setChangeValue(changeValue);
       setModalState(false);
     } else {
-      alert.show("No note! Empty fields!");
+      alert.show("No note!");
     }
   };
 
   return (
     <div className="" style={{ display: "flex", flexDirection: "row" }}>
       <div>
-        <form onSubmit={submitAddDataHandler}>
+        <form onSubmit={submitChangeHandler}>
           {/*batchID*/}
           <div className="form-group mx-3">
             <label for="batchID" className="form-label">
@@ -129,14 +115,14 @@ const CreateReports = ({ setModalState }) => {
               type={"text"}
               className="form-control"
               placeholder="Enter batchID"
-              value={addValue.batchID}
+              value={changeValue.batchID}
               onChange={(e) =>
-                setAddValue({ ...addValue, batchID: e.target.value })
+                setChangeValue({ ...changeValue, batchID: e.target.value })
               }
             />
           </div>
         </form>
-        <form onSubmit={submitAddDataHandler}>
+        <form onSubmit={submitChangeHandler}>
           {/*blueprint*/}
           <label for="blueprint" className="form-label">
             blueprint
@@ -148,14 +134,14 @@ const CreateReports = ({ setModalState }) => {
               type={"text"}
               className="form-control"
               placeholder="Enter blueprint"
-              value={addValue.blueprint}
+              value={changeValue.blueprint}
               onChange={(e) =>
-                setAddValue({ ...addValue, blueprint: e.target.value })
+                setChangeValue({ ...changeValue, blueprint: e.target.value })
               }
             />
           </div>
         </form>
-        <form onSubmit={submitAddDataHandler}>
+        <form onSubmit={submitChangeHandler}>
           {/*detailsNumber*/}
           <label for="detailsNumber" className="form-label">
             detailsNumber
@@ -168,14 +154,17 @@ const CreateReports = ({ setModalState }) => {
               type={"number"}
               className="form-control"
               placeholder="Enter detailsNumber"
-              value={addValue.detailsNumber}
+              value={changeValue.detailsNumber}
               onChange={(e) =>
-                setAddValue({ ...addValue, detailsNumber: e.target.value })
+                setChangeValue({
+                  ...changeValue,
+                  detailsNumber: e.target.value,
+                })
               }
             />
           </div>
         </form>
-        <form onSubmit={submitAddDataHandler}>
+        <form onSubmit={submitChangeHandler}>
           {/*worker*/}
           <label for="worker" className="form-label">
             worker
@@ -187,18 +176,18 @@ const CreateReports = ({ setModalState }) => {
               type={"text"}
               className="form-control"
               placeholder="Enter worker"
-              value={addValue.worker}
+              value={changeValue.worker}
               onChange={(e) =>
-                setAddValue({ ...addValue, worker: e.target.value })
+                setChangeValue({ ...changeValue, worker: e.target.value })
               }
             /> */}
             <select
-              id="workerOptions-select"
+              id="options-select"
               className="form-control"
-              value={selectedWorker.id}
-              onChange={handleWorkerOptionChange}
+              value={selectedItem.id}
+              onChange={handleOptionChange}
             >
-              {workerOptions.map((option) => (
+              {options.map((option) => (
                 <option key={option.id} value={option.id}>
                   {option.surname}
                 </option>
@@ -210,14 +199,14 @@ const CreateReports = ({ setModalState }) => {
         <div>
           <button
             className="btn btn-success mx-3"
-            onClick={submitAddDataHandler}
+            onClick={submitChangeHandler}
           >
-            Create worker
+            Change Post
           </button>
         </div>
       </div>
       <div>
-        <form onSubmit={submitAddDataHandler}>
+        <form onSubmit={submitChangeHandler}>
           {/*workerDateStamp*/}
           <label for="workerDateStamp" className="form-label">
             workerDateStamp
@@ -228,45 +217,36 @@ const CreateReports = ({ setModalState }) => {
               type={"date"}
               className="form-control"
               placeholder="Enter workerDateStamp"
-              value={addValue.workerDateStamp}
+              value={changeValue.workerDateStamp}
               onChange={(e) =>
-                setAddValue({ ...addValue, workerDateStamp: e.target.value })
+                setChangeValue({
+                  ...changeValue,
+                  workerDateStamp: e.target.value,
+                })
               }
             />
           </div>
         </form>
-        <form onSubmit={submitAddDataHandler}>
+        <form onSubmit={submitChangeHandler}>
           {/*controller*/}
           <label for="controller" className="form-label">
             controller
           </label>
           <div className="form-group mx-3">
-            {/* <input
+            <input
               maxLength="20"
               id="controller"
               type={"text"}
               className="form-control"
               placeholder="Enter controller"
-              value={addValue.controller}
+              value={changeValue.controller}
               onChange={(e) =>
-                setAddValue({ ...addValue, controller: e.target.value })
+                setChangeValue({ ...changeValue, controller: e.target.value })
               }
-            /> */}
-            <select
-              id="workerOptions-select"
-              className="form-control"
-              value={selectedController.id}
-              onChange={handleControllerOptionChange}
-            >
-              {controllerOptions.map((option) => (
-                <option key={option.id} value={option.id}>
-                  {option.surname}
-                </option>
-              ))}
-            </select>
+            />
           </div>
         </form>
-        <form onSubmit={submitAddDataHandler}>
+        <form onSubmit={submitChangeHandler}>
           {/*controllerDateStamp*/}
           <label for="controllerDateStamp" className="form-label">
             controllerDateStamp
@@ -277,17 +257,17 @@ const CreateReports = ({ setModalState }) => {
               type={"date"}
               className="form-control"
               placeholder="Enter controllerDateStamp"
-              value={addValue.controllerDateStamp}
+              value={changeValue.controllerDateStamp}
               onChange={(e) =>
-                setAddValue({
-                  ...addValue,
+                setChangeValue({
+                  ...changeValue,
                   controllerDateStamp: e.target.value,
                 })
               }
             />
           </div>
         </form>
-        <form onSubmit={submitAddDataHandler}>
+        <form onSubmit={submitChangeHandler}>
           {/*operationsCount*/}
           <label for="operationsCount" className="form-label">
             operationsCount
@@ -300,21 +280,26 @@ const CreateReports = ({ setModalState }) => {
               type={"number"}
               className="form-control"
               placeholder="Enter operationsCount"
-              value={addValue.completed}
+              value={changeValue.all}
               onChange={(e) =>
-                setAddValue({ ...addValue, completed: e.target.value })
+                setChangeValue({
+                  ...changeValue,
+                  all: e.target.value,
+                })
               }
             />
             <input
               max={100}
               min={0}
-              id="operationsCount"
               type={"number"}
               className="form-control"
               placeholder="Enter operationsCount"
-              value={addValue.all}
+              value={changeValue.completed}
               onChange={(e) =>
-                setAddValue({ ...addValue, all: e.target.value })
+                setChangeValue({
+                  ...changeValue,
+                  completed: e.target.value,
+                })
               }
             />
           </div>
@@ -335,9 +320,9 @@ const CreateReports = ({ setModalState }) => {
             type={"text"}
             className="form-control"
             placeholder="Enter defects"
-            value={addValue.defects}
+            value={changeValue.defects}
             onChange={(e) =>
-              setAddValue({ ...addValue, defects: e.target.value })
+              setChangeValue({ ...changeValue, defects: e.target.value })
             }
           />
         </div>
@@ -346,4 +331,4 @@ const CreateReports = ({ setModalState }) => {
   );
 };
 
-export default CreateReports;
+export default ChangeReports;

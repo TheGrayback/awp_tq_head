@@ -29,7 +29,7 @@ export const Reports = () => {
             <td>{data.detailsNumber}</td>
             <td>{data.workerSurname}</td>
             {/* <td>{data.workerDateStamp}</td> */}
-            <td>{data.controller}</td>
+            <td>{data.controllerSurname}</td>
             <td>{data.controllerDateStamp}</td>
             <td>{data.all}</td>
             {/* <td>{data.operations}</td> */}

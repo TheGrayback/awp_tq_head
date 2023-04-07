@@ -3,59 +3,87 @@ import { ReportsFirebaseContext } from "../../Context/reportsFirebase/reportsFir
 import { AlertContext } from "../../Context/Alert/AlertContext";
 import { databaseRef } from "../../firebase";
 import "firebase/firestore";
-import {
-  ref,
-  get,
-} from "firebase/database";
+import { ref, get } from "firebase/database";
 
 const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
   const [changeValue, setChangeValue] = useState({
     batchID: postData.batchID, //ID партии деталей
     blueprint: postData.blueprint,
     detailsNumber: postData.detailsNumber,
+    //--WORKER--
     workerID: postData.workerID,
     workerSurname: postData.workerSurname,
     workerDateStamp: postData.workerDateStamp,
-    controller: postData.controller,
-    // {
-    //   controllerID: "",
-    //   surname: "",
-    // },
+    //--WORKER--
+    //--CONTROLLER--
+    controllerID: postData.controllerID,
+    controllerSurname: postData.controllerSurname,
     controllerDateStamp: postData.controllerDateStamp,
+    //--CONTROLLER--
     all: postData.all,
     completed: postData.completed,
     defects: postData.defects,
   });
-  console.log(postData, changeValue, isVisible);
-  
+
   useMemo(() => {
-    if(isVisible === true) {
+    if (isVisible === true) {
       setChangeValue(postData);
     }
-  },[postData, isVisible])
-
-  const catalog = "workers";
+  }, [postData, isVisible]);
 
   useEffect(() => {
+    console.log("updated");
     const fetchOptions = async () => {
-      const snapshot = await get(ref(databaseRef, catalog));
-      const dataArray = [];
-      snapshot.forEach((childSnapshot) => {
+      const workersSnapshot = await get(ref(databaseRef, "workers"));
+      const controllersSnapshot = await get(ref(databaseRef, "controllers"));
+      const workersData = [];
+      const controllersData = [];
+      workersSnapshot.forEach((childSnapshot) => {
         const { surname } = childSnapshot.val(); // получаем только свойство "surname"
         const id = childSnapshot.key; // получаем ключ объекта
-        dataArray.push({ id, surname }); // добавляем объект в массив
+        workersData.push({ id, surname }); // добавляем объект в массив
       });
-      setOptions(dataArray);
-      console.log(dataArray);
+      controllersSnapshot.forEach((childSnapshot) => {
+        const { surname } = childSnapshot.val(); // получаем только свойство "surname"
+        const id = childSnapshot.key; // получаем ключ объекта
+        controllersData.push({ id, surname }); // добавляем объект в массив
+      });
+      setWorkerOptions(workersData);
+      setControllerOptions(controllersData);
+      console.log(workersData);
     };
     fetchOptions();
   }, []);
 
-  const [options, setOptions] = useState([]);
-  const [selectedItem, setSelectedOption] = useState({
+  const [workerOptions, setWorkerOptions] = useState([]);
+  const [selectedWorker, setSelectedWorker] = useState({
     id: "",
-    surname: ""
+    surname: "",
   });
+
+  const [controllerOptions, setControllerOptions] = useState([]);
+  const [selectedController, setSelectedController] = useState({
+    id: "",
+    surname: "",
+  });
+
+  const handleWorkerOptionChange = (event) => {
+    const selectedItem = workerOptions.find(
+      (item) => item.id === event.target.value
+    );
+    setSelectedWorker(selectedItem);
+    changeValue.workerID = selectedItem.id;
+    changeValue.workerSurname = selectedItem.surname;
+  };
+
+  const handleControllerOptionChange = (event) => {
+    const selectedItem = controllerOptions.find(
+      (item) => item.id === event.target.value
+    );
+    setSelectedController(selectedItem);
+    changeValue.controllerID = selectedItem.id;
+    changeValue.controllerSurname = selectedItem.surname;
+  };
 
   const alert = useContext(AlertContext);
   const firebase = useContext(ReportsFirebaseContext);
@@ -73,13 +101,6 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
     }
     return true; // Если все свойства заполнены, возвращаем true
   }
-
-  const handleOptionChange = (event) => {
-    const selectedItem = options.find((item) => item.id === event.target.value);
-    setSelectedOption(selectedItem);
-    changeValue.workerID = selectedItem.id;
-    changeValue.workerSurname = selectedItem.surname;
-  };
 
   const submitChangeHandler = async (event) => {
     event.preventDefault();
@@ -184,10 +205,10 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
             <select
               id="options-select"
               className="form-control"
-              value={selectedItem.id}
-              onChange={handleOptionChange}
+              value={selectedWorker.id}
+              onChange={handleWorkerOptionChange}
             >
-              {options.map((option) => (
+              {workerOptions.map((option) => (
                 <option key={option.id} value={option.id}>
                   {option.surname}
                 </option>
@@ -233,7 +254,7 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
             controller
           </label>
           <div className="form-group mx-3">
-            <input
+            {/* <input
               maxLength="20"
               id="controller"
               type={"text"}
@@ -243,7 +264,19 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
               onChange={(e) =>
                 setChangeValue({ ...changeValue, controller: e.target.value })
               }
-            />
+            /> */}
+            <select
+              id="options-select"
+              className="form-control"
+              value={selectedController.id}
+              onChange={handleControllerOptionChange}
+            >
+              {controllerOptions.map((option) => (
+                <option key={option.id} value={option.id}>
+                  {option.surname}
+                </option>
+              ))}
+            </select>
           </div>
         </form>
         <form onSubmit={submitChangeHandler}>

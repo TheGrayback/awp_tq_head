@@ -19,7 +19,7 @@ export const WorkerTab = () => {
   const [filter, setFilter] = useState({
     sortQuery: "",
     searchQuery: "",
-    searchKey: "title",
+    searchKey: "u_id",
   });
   const [isAddVisible, setAddVisible] = useState(false);
   const [isChangeVisible, setChangeVisible] = useState(false);
@@ -66,9 +66,13 @@ export const WorkerTab = () => {
         filter={filter}
         setFilter={setFilter}
         sortOptions={[
-          { value: "title", name: "Пошук за title" },
-          { value: "id", name: "Пошук за ID" },
-          { value: "date", name: "Пошук за date" },
+          { value: "u_id", name: "Пошук за u_id" },
+          { value: "surname", name: "Пошук за surname" },
+          { value: "name", name: "Пошук за name" },
+          { value: "patronymic", name: "Пошук за patronymic" },
+          { value: "birthdate", name: "Пошук за birthdate" },
+          { value: "profession", name: "Пошук за profession" },
+          { value: "post", name: "Пошук за post" },
         ]}
       />
       <button

@@ -5,14 +5,13 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { SearchForm } from "../Components/SearchForm";
+import { SearchForm } from "../Components/workControllers/SearchForm";
 import Loader from "../Components/Loader";
-import WorkersList from "../Components/WorkersList";
-// import { FirebaseContext } from "../Context/Firebase/FirebaseContext";
-import { FirebaseContext } from "../Context/controllersFirebase/FirebaseContext";
+import ControllersList from "../Components/workControllers/ControllersList";
+import { FirebaseContext } from "../Context/Firebase/controllersFirebaseContext";
 import ModalForm from "../Components/Modal/ModalForm";
-import CreateWorker from "../Components/CreateWorker";
-import ChangeWorker from "../Components/ChangeWorker";
+import CreateController from "../Components/workControllers/CreateController";
+import ChangeController from "../Components/workControllers/ChangeController";
 import { WorkersContext } from "../Context/Notes/WorkersContext";
 
 export const ControllerTab = () => {
@@ -20,7 +19,7 @@ export const ControllerTab = () => {
   const [filter, setFilter] = useState({
     sortQuery: "",
     searchQuery: "",
-    searchKey: "title",
+    searchKey: "u_id",
   });
   const [isAddVisible, setAddVisible] = useState(false);
   const [isChangeVisible, setChangeVisible] = useState(false);
@@ -67,9 +66,12 @@ export const ControllerTab = () => {
         filter={filter}
         setFilter={setFilter}
         sortOptions={[
-          { value: "title", name: "Пошук за title" },
-          { value: "id", name: "Пошук за ID" },
-          { value: "date", name: "Пошук за date" },
+          { value: "u_id", name: "Пошук за u_id" },
+          { value: "surname", name: "Пошук за surname" },
+          { value: "name", name: "Пошук за name" },
+          { value: "patronymic", name: "Пошук за patronymic" },
+          { value: "birthdate", name: "Пошук за birthdate" },
+          { value: "post", name: "Пошук за post" },
         ]}
       />
       <button
@@ -82,10 +84,10 @@ export const ControllerTab = () => {
       </button>
       <hr />
       <ModalForm isVisible={isAddVisible} setVisible={setAddVisible}>
-        <CreateWorker setModalState={setAddVisible} />
+        <CreateController setModalState={setAddVisible} />
       </ModalForm>
       <ModalForm isVisible={isChangeVisible} setVisible={setChangeVisible}>
-        <ChangeWorker isVisible={isChangeVisible} setModalState={setChangeVisible} postId={postId} />
+        <ChangeController isVisible={isChangeVisible} setModalState={setChangeVisible} postId={postId} />
       </ModalForm>
 
       <WorkersContext.Provider
@@ -96,7 +98,7 @@ export const ControllerTab = () => {
           setPostId: setPostId,
         }}
       >
-        {loading ? <Loader /> : <WorkersList />}
+        {loading ? <Loader /> : <ControllersList />}
       </WorkersContext.Provider>
       <div>
         <button

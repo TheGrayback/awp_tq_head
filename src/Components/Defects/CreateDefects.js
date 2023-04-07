@@ -3,82 +3,61 @@ import { ReportsFirebaseContext } from "../../Context/reportsFirebase/reportsFir
 import { AlertContext } from "../../Context/Alert/AlertContext";
 import { databaseRef } from "../../firebase";
 import "firebase/firestore";
-import { ref, get } from "firebase/database";
+import {
+  ref,
+  get,
+} from "firebase/database";
 
 const CreateReports = ({ setModalState }) => {
   const [addValue, setAddValue] = useState({
     batchID: "", //ID партии деталей
     blueprint: "",
     detailsNumber: "",
-    //--WORKER--
     workerID: "",
     workerSurname: "",
     workerDateStamp: "",
-    //--WORKER--
-    //--CONTROLLER--
-    controllerID: "",
-    controllerSurname: "",
+    controller: "",
+    // {
+    //   controllerID: "",
+    //   surname: "",
+    // },
     controllerDateStamp: "",
-    //--CONTROLLER--
     all: "",
     completed: "",
     defects: "",
   });
+
+  const catalog = "workers";
 
   const alert = useContext(AlertContext);
   const firebase = useContext(ReportsFirebaseContext);
 
   useEffect(() => {
     const fetchOptions = async () => {
-      const workersSnapshot = await get(ref(databaseRef, "workers"));
-      const controllersSnapshot = await get(ref(databaseRef, "controllers"));
-      const workersData = [];
-      const controllersData = [];
-      workersSnapshot.forEach((childSnapshot) => {
+      const snapshot = await get(ref(databaseRef, catalog));
+      const dataArray = [];
+      snapshot.forEach((childSnapshot) => {
         const { surname } = childSnapshot.val(); // получаем только свойство "surname"
         const id = childSnapshot.key; // получаем ключ объекта
-        workersData.push({ id, surname }); // добавляем объект в массив
+        dataArray.push({ id, surname }); // добавляем объект в массив
       });
-      controllersSnapshot.forEach((childSnapshot) => {
-        const { surname } = childSnapshot.val(); // получаем только свойство "surname"
-        const id = childSnapshot.key; // получаем ключ объекта
-        controllersData.push({ id, surname }); // добавляем объект в массив
-      });
-      setWorkerOptions(workersData);
-      setControllerOptions(controllersData);
-      console.log(workersData);
+      setOptions(dataArray);
+      console.log(dataArray);
     };
     fetchOptions();
   }, []);
 
-  const [workerOptions, setWorkerOptions] = useState([]);
-  const [selectedWorker, setSelectedWorker] = useState({
+  const [options, setOptions] = useState([]);
+  const [selectedItem, setSelectedOption] = useState({
     id: "",
-    surname: "",
+    surname: ""
   });
 
-  const [controllerOptions, setControllerOptions] = useState([]);
-  const [selectedController, setSelectedController] = useState({
-    id: "",
-    surname: "",
-  });
-
-  const handleWorkerOptionChange = (event) => {
-    const selectedItem = workerOptions.find(
-      (item) => item.id === event.target.value
-    );
-    setSelectedWorker(selectedItem);
+  const handleOptionChange = (event) => {
+    const selectedItem = options.find((item) => item.id === event.target.value);
+    setSelectedOption(selectedItem);
     addValue.workerID = selectedItem.id;
     addValue.workerSurname = selectedItem.surname;
-  };
-
-  const handleControllerOptionChange = (event) => {
-    const selectedItem = controllerOptions.find(
-      (item) => item.id === event.target.value
-    );
-    setSelectedController(selectedItem);
-    addValue.controllerID = selectedItem.id;
-    addValue.controllerSurname = selectedItem.surname;
   };
 
   function checkObjectProperties(obj) {
@@ -193,12 +172,12 @@ const CreateReports = ({ setModalState }) => {
               }
             /> */}
             <select
-              id="workerOptions-select"
+              id="options-select"
               className="form-control"
-              value={selectedWorker.id}
-              onChange={handleWorkerOptionChange}
+              value={selectedItem.id}
+              onChange={handleOptionChange}
             >
-              {workerOptions.map((option) => (
+              {options.map((option) => (
                 <option key={option.id} value={option.id}>
                   {option.surname}
                 </option>
@@ -241,7 +220,7 @@ const CreateReports = ({ setModalState }) => {
             controller
           </label>
           <div className="form-group mx-3">
-            {/* <input
+            <input
               maxLength="20"
               id="controller"
               type={"text"}
@@ -251,19 +230,7 @@ const CreateReports = ({ setModalState }) => {
               onChange={(e) =>
                 setAddValue({ ...addValue, controller: e.target.value })
               }
-            /> */}
-            <select
-              id="workerOptions-select"
-              className="form-control"
-              value={selectedController.id}
-              onChange={handleControllerOptionChange}
-            >
-              {controllerOptions.map((option) => (
-                <option key={option.id} value={option.id}>
-                  {option.surname}
-                </option>
-              ))}
-            </select>
+            />
           </div>
         </form>
         <form onSubmit={submitAddDataHandler}>

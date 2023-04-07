@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { ControllerFirebaseContext } from "../../Context/controllersFirebase/controllerFirebaseContext";
+import { FirebaseContext } from "../../Context/Firebase/controllersFirebaseContext";
 import { AlertContext } from "../../Context/Alert/AlertContext";
 
 const CreateController = ({ setModalState }) => {
@@ -9,12 +9,12 @@ const CreateController = ({ setModalState }) => {
     name: "",
     patronymic: "",
     birthdate: "",
-    profession: "",
+    // profession: "",
     post: "",
   });
 
   const alert = useContext(AlertContext);
-  const firebase = useContext(ControllerFirebaseContext);
+  const firebase = useContext(FirebaseContext);
 
   function checkObjectProperties(obj) {
     for (let prop in obj) {
@@ -113,7 +113,7 @@ const CreateController = ({ setModalState }) => {
           />
         </div>
       </form>
-      <form onSubmit={submitAddDataHandler}>{/*profession*/}
+       {/* <form onSubmit={submitAddDataHandler}>
         <label for="profession" className="form-label">
         profession
         </label>
@@ -128,7 +128,7 @@ const CreateController = ({ setModalState }) => {
             onChange={(e) => setAddValue({ ...addValue, profession: e.target.value })}
           />
         </div>
-      </form>
+      </form> */}
       <form onSubmit={submitAddDataHandler}>{/*post*/}
         <label for="post" className="form-label">
         post

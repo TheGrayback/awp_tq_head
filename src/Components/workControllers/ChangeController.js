@@ -1,5 +1,5 @@
 import React, { useState, useContext,useMemo } from "react";
-import { ControllerFirebaseContext } from "../../Context/controllersFirebase/controllerFirebaseContext";
+import { FirebaseContext } from "../../Context/Firebase/controllersFirebaseContext";
 import { AlertContext } from "../../Context/Alert/AlertContext";
 
 const ChangeController = ({ isVisible, setModalState, postId: postData }) => {
@@ -20,7 +20,7 @@ const ChangeController = ({ isVisible, setModalState, postId: postData }) => {
   },[postData, isVisible])
 
   const alert = useContext(AlertContext);
-  const firebase = useContext(ControllerFirebaseContext);
+  const firebase = useContext(FirebaseContext);
 
   function checkObjectProperties(obj) {
     for (let prop in obj) {
