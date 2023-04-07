@@ -1,8 +1,8 @@
 import React, { useState, useContext } from "react";
-import { FirebaseContext } from "../Context/Firebase/FirebaseContext";
-import { AlertContext } from "../Context/Alert/AlertContext";
+import { ControllerFirebaseContext } from "../../Context/controllersFirebase/controllerFirebaseContext";
+import { AlertContext } from "../../Context/Alert/AlertContext";
 
-const CreateWorker = ({ setModalState }) => {
+const CreateController = ({ setModalState }) => {
   const [addValue, setAddValue] = useState({
     u_id: "",
     surname: "",
@@ -14,7 +14,7 @@ const CreateWorker = ({ setModalState }) => {
   });
 
   const alert = useContext(AlertContext);
-  const firebase = useContext(FirebaseContext);
+  const firebase = useContext(ControllerFirebaseContext);
 
   function checkObjectProperties(obj) {
     for (let prop in obj) {
@@ -161,4 +161,4 @@ const CreateWorker = ({ setModalState }) => {
   );
 };
 
-export default CreateWorker;
+export default CreateController;

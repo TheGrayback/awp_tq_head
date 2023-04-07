@@ -9,13 +9,18 @@ export const Navbar = () => (
         <div className="navbar-brand">Note App</div>
       </li>
       <li className="nav-item">
-        <NavLink className="nav-link" aria-current="page" to="/workers" exact="true">
+        <NavLink
+          className="nav-link"
+          aria-current="page"
+          to="/workers"
+          exact="true"
+        >
           Workers
         </NavLink>
       </li>
       <li className="nav-item">
-        <NavLink className="nav-link" aria-current="page" to="/about">
-          About
+        <NavLink className="nav-link" aria-current="page" to="/controllers">
+          Controllers
         </NavLink>
       </li>
       <li className="nav-item">

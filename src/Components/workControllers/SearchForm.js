@@ -28,7 +28,7 @@ export const SearchForm = ({ filter, setFilter, sortOptions }) => {
   /*можно поменять онСабмит на онЧендж и наоборот. Наверное при огромном кол-ве записей онЧендж будет
       лагать. Или нет?*/
   return (
-    <div className="">
+    <div className="my-3">
       <div className="input-group w-75 mx-auto">
         <input
           type={"text"}

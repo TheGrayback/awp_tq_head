@@ -11,17 +11,28 @@ export const Reports = () => {
     <table className="table table-bordered table-hover table-sm">
       <thead>
         <tr>
-          <th scope="col">ID</th>
-          <th scope="col">title</th>
-          <th scope="col">date</th>
+          <th scope="col">batchID</th>
+          <th scope="col">blueprint</th>
+          <th scope="col" style={{width:"100px"}}>detailsNumber</th>
+          <th scope="col">workerSurname</th>
+          {/* <th scope="col">workerDateStamp</th> */}
+          <th scope="col">controller</th>
+          <th scope="col" style={{width:"100px"}}>controllerDateStamp</th>
+          <th scope="col" style={{width:"100px"}}>operationsCount</th>
         </tr>
       </thead>
       <tbody>
         {data.map((data) => (
           <tr key={data.id}>
-            <td>{data.u_id}</td>
-            <td>{data.surname}</td>
-            <td>{data.name}</td>
+            <td>{data.batchID}</td>
+            <td>{data.blueprint}</td>
+            <td>{data.detailsNumber}</td>
+            <td>{data.workerSurname}</td>
+            {/* <td>{data.workerDateStamp}</td> */}
+            <td>{data.controller}</td>
+            <td>{data.controllerDateStamp}</td>
+            <td>{data.all}</td>
+            {/* <td>{data.operations}</td> */}
             <DeleteButton
               WhatRemove={{ id: data.id, removeFunction: removeData }}
             />

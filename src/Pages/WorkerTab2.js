@@ -8,13 +8,14 @@ import React, {
 import { SearchForm } from "../Components/SearchForm";
 import Loader from "../Components/Loader";
 import WorkersList from "../Components/WorkersList";
-import { FirebaseContext } from "../Context/Firebase/FirebaseContext";
+// import { FirebaseContext } from "../Context/Firebase/FirebaseContext";
+import { FirebaseContext } from "../Context/controllersFirebase/FirebaseContext";
 import ModalForm from "../Components/Modal/ModalForm";
 import CreateWorker from "../Components/CreateWorker";
 import ChangeWorker from "../Components/ChangeWorker";
 import { WorkersContext } from "../Context/Notes/WorkersContext";
 
-export const WorkerTab = () => {
+export const ControllerTab = () => {
   const { loading, data, fetchData, removeData } = useContext(FirebaseContext);
   const [filter, setFilter] = useState({
     sortQuery: "",

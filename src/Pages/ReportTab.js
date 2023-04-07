@@ -15,8 +15,9 @@ import ChangeReports from "../Components/Reports/ChangeReports";
 import { WorkersContext } from "../Context/Notes/WorkersContext";
 
 export const ReportTab = () => {
-  const { loading, data, fetchData, removeData } =
-    useContext(ReportsFirebaseContext);
+  const { loading, data, fetchData, removeData } = useContext(
+    ReportsFirebaseContext
+  );
   const [filter, setFilter] = useState({
     sortQuery: "",
     searchQuery: "",
@@ -25,6 +26,7 @@ export const ReportTab = () => {
   const [isAddVisible, setAddVisible] = useState(false);
   const [isChangeVisible, setChangeVisible] = useState(false);
   const [postId, setPostId] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetchData();
@@ -51,15 +53,17 @@ export const ReportTab = () => {
     }
   }, [filter.searchQuery, filter.searchKey, sortedData]);
 
+  const displayedItems = searchedData.slice(
+    (currentPage - 1) * 10,
+    currentPage * 10
+  );
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
   return (
     <Fragment>
-      <ModalForm isVisible={isAddVisible} setVisible={setAddVisible}>
-        <CreateReports setModalState={setAddVisible} />
-      </ModalForm>
-      <ModalForm isVisible={isChangeVisible} setVisible={setChangeVisible}>
-        <ChangeReports setModalState={setChangeVisible} postId={postId} />
-      </ModalForm>
-
       <SearchForm
         filter={filter}
         setFilter={setFilter}
@@ -78,9 +82,16 @@ export const ReportTab = () => {
         Create Post
       </button>
       <hr />
+      <ModalForm isVisible={isAddVisible} setVisible={setAddVisible}>
+        <CreateReports setModalState={setAddVisible} />
+      </ModalForm>
+      <ModalForm isVisible={isChangeVisible} setVisible={setChangeVisible}>
+        <ChangeReports isVisible={isChangeVisible} setModalState={setChangeVisible} postId={postId} />
+      </ModalForm>
+
       <WorkersContext.Provider
         value={{
-          data: searchedData,
+          data: displayedItems,
           removeData: removeData,
           setChangeVisible: setChangeVisible,
           setPostId: setPostId,
@@ -88,6 +99,21 @@ export const ReportTab = () => {
       >
         {loading ? <Loader /> : <ReportsList />}
       </WorkersContext.Provider>
+      <div>
+        <button
+          disabled={currentPage === 1}
+          onClick={() => handlePageChange(currentPage - 1)}
+        >
+          Предыдущая страница
+        </button>
+        <button>{currentPage}</button>
+        <button
+          disabled={currentPage === Math.ceil(searchedData.length / 10)}
+          onClick={() => handlePageChange(currentPage + 1)}
+        >
+          Следующая страница
+        </button>
+      </div>
     </Fragment>
   );
 };

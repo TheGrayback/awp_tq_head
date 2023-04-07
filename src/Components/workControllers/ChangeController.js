@@ -1,8 +1,8 @@
 import React, { useState, useContext,useMemo } from "react";
-import { FirebaseContext } from "../Context/Firebase/FirebaseContext";
-import { AlertContext } from "../Context/Alert/AlertContext";
+import { ControllerFirebaseContext } from "../../Context/controllersFirebase/controllerFirebaseContext";
+import { AlertContext } from "../../Context/Alert/AlertContext";
 
-const ChangeWorker = ({ isVisible, setModalState, postId: postData }) => {
+const ChangeController = ({ isVisible, setModalState, postId: postData }) => {
   const [changeValue, setChangeValue] = useState({
     u_id: postData.u_id,
     surname: postData.surname,
@@ -20,7 +20,7 @@ const ChangeWorker = ({ isVisible, setModalState, postId: postData }) => {
   },[postData, isVisible])
 
   const alert = useContext(AlertContext);
-  const firebase = useContext(FirebaseContext);
+  const firebase = useContext(ControllerFirebaseContext);
 
   function checkObjectProperties(obj) {
     for (let prop in obj) {
@@ -168,4 +168,4 @@ const ChangeWorker = ({ isVisible, setModalState, postId: postData }) => {
   );
 };
 
-export default ChangeWorker;
+export default ChangeController;
