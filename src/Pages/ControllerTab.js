@@ -5,7 +5,7 @@ import React, {
   useMemo,
   useState,
 } from "react";
-import { SearchForm } from "../Components/workControllers/SearchForm";
+import { SearchForm } from "../Components/SearchForm";
 import Loader from "../Components/Loader";
 import ControllersList from "../Components/workControllers/ControllersList";
 import { FirebaseContext } from "../Context/Firebase/controllersFirebaseContext";

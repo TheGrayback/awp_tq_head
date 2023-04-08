@@ -1,6 +1,6 @@
 import React, { useReducer } from "react";
-import { FirebaseContext } from "./FirebaseContext";
-import { FirebaseReducer } from "./FirebaseReducer";
+import { FirebaseContext } from "./defectsFirebaseContext";
+import { FirebaseReducer } from "./defectsFirebaseReducer";
 import axios from "axios";
 import { ACTION_FETCH, ADD_DATA, REMOVE_DATA, SHOW_LOADER } from "../types";
 import GetService from "../../API/GetService";
@@ -16,9 +16,9 @@ import {
 } from "firebase/database";
 const url =
   "https://react-study-5a117-default-rtdb.europe-west1.firebasedatabase.app/";
-const catalog = "workers";
+const catalog = "defects";
 
-export const FirebaseState = ({ children }) => {
+export const DefectsFirebaseState = ({ children }) => {
   const initialState = {
     data: [],
     loading: false,
@@ -55,15 +55,47 @@ export const FirebaseState = ({ children }) => {
     return payload;
   };
 
-  const addData = async ({u_id, surname, name, patronymic, birthdate, profession, post}) => {
+  const addData = async ({
+    reportID, //ID партии деталей
+    batchID,
+    blueprint,
+    operation,
+    detailsNumber,
+    defectiveDetails,
+    //--WORKER--
+    workerID,
+    workerSurname,
+    //--WORKER--
+    //--CONTROLLER--
+    controllerID,
+    controllerSurname,
+    controllerDateStamp,
+    //--CONTROLLER--
+    defectType,
+    reason,
+    summary,
+    autograph,
+  }) => {
     const data = {
-      u_id,
-      surname,
-      name,
-      patronymic,
-      birthdate,
-      profession,
-      post,
+      reportID, //ID партии деталей
+      batchID,
+      blueprint,
+      operation,
+      detailsNumber,
+      defectiveDetails,
+      //--WORKER--
+      workerID,
+      workerSurname,
+      //--WORKER--
+      //--CONTROLLER--
+      controllerID,
+      controllerSurname,
+      controllerDateStamp,
+      //--CONTROLLER--
+      defectType,
+      reason,
+      summary,
+      autograph,
     };
     // try {
     //   const res = await axios.post(`${url}/${catalog}.json`, data);
@@ -86,15 +118,47 @@ export const FirebaseState = ({ children }) => {
     }
   };
 
-  const changeData = async (id, {u_id, surname, name, patronymic, birthdate, profession, post}) => {
+  const changeData = async (id, {
+    reportID, //ID партии деталей
+    batchID,
+    blueprint,
+    operation,
+    detailsNumber,
+    defectiveDetails,
+    //--WORKER--
+    workerID,
+    workerSurname,
+    //--WORKER--
+    //--CONTROLLER--
+    controllerID,
+    controllerSurname,
+    controllerDateStamp,
+    //--CONTROLLER--
+    defectType,
+    reason,
+    summary,
+    autograph,
+  }) => {
     const data = {
-      u_id,
-      surname,
-      name,
-      patronymic,
-      birthdate,
-      profession,
-      post,
+      reportID, //ID партии деталей
+      batchID,
+      blueprint,
+      operation,
+      detailsNumber,
+      defectiveDetails,
+      //--WORKER--
+      workerID,
+      workerSurname,
+      //--WORKER--
+      //--CONTROLLER--
+      controllerID,
+      controllerSurname,
+      controllerDateStamp,
+      //--CONTROLLER--
+      defectType,
+      reason,
+      summary,
+      autograph,
     };
     // try {
     //   const res = await axios.patch(`${url}/${catalog}/${id}.json`, data);

@@ -28,6 +28,16 @@ export const Navbar = () => (
           Reports
         </NavLink>
       </li>
+      <li className="nav-item">
+        <NavLink className="nav-link" aria-current="page" to="/defects">
+          Defects
+        </NavLink>
+      </li>
+      <li className="nav-item">
+        <NavLink className="nav-link" aria-current="page" to="/statistics">
+          Statistics
+        </NavLink>
+      </li>
     </ul>
     <div>
       <h6 className="mx-3 text-light">

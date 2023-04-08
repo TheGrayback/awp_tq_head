@@ -10,16 +10,16 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
     batchID: postData.batchID, //ID партии деталей
     blueprint: postData.blueprint,
     detailsNumber: postData.detailsNumber,
-    //--WORKER--
-    workerID: postData.workerID,
-    workerSurname: postData.workerSurname,
-    workerDateStamp: postData.workerDateStamp,
-    //--WORKER--
-    //--CONTROLLER--
-    controllerID: postData.controllerID,
-    controllerSurname: postData.controllerSurname,
-    controllerDateStamp: postData.controllerDateStamp,
-    //--CONTROLLER--
+    // //--WORKER--
+    // workerID: postData.workerID,
+    // workerSurname: postData.workerSurname,
+    // workerDateStamp: postData.workerDateStamp,
+    // //--WORKER--
+    // //--CONTROLLER--
+    // controllerID: postData.controllerID,
+    // controllerSurname: postData.controllerSurname,
+    // controllerDateStamp: postData.controllerDateStamp,
+    // //--CONTROLLER--
     all: postData.all,
     completed: postData.completed,
     defects: postData.defects,
@@ -31,59 +31,59 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
     }
   }, [postData, isVisible]);
 
-  useEffect(() => {
-    console.log("updated");
-    const fetchOptions = async () => {
-      const workersSnapshot = await get(ref(databaseRef, "workers"));
-      const controllersSnapshot = await get(ref(databaseRef, "controllers"));
-      const workersData = [];
-      const controllersData = [];
-      workersSnapshot.forEach((childSnapshot) => {
-        const { surname } = childSnapshot.val(); // получаем только свойство "surname"
-        const id = childSnapshot.key; // получаем ключ объекта
-        workersData.push({ id, surname }); // добавляем объект в массив
-      });
-      controllersSnapshot.forEach((childSnapshot) => {
-        const { surname } = childSnapshot.val(); // получаем только свойство "surname"
-        const id = childSnapshot.key; // получаем ключ объекта
-        controllersData.push({ id, surname }); // добавляем объект в массив
-      });
-      setWorkerOptions(workersData);
-      setControllerOptions(controllersData);
-      console.log(workersData);
-    };
-    fetchOptions();
-  }, []);
+  // useEffect(() => {
+  //   console.log("updated");
+  //   const fetchOptions = async () => {
+  //     // const workersSnapshot = await get(ref(databaseRef, "workers"));
+  //     const controllersSnapshot = await get(ref(databaseRef, "controllers"));
+  //     // const workersData = [];
+  //     const controllersData = [];
+  //     // workersSnapshot.forEach((childSnapshot) => {
+  //     //   const { surname } = childSnapshot.val(); // получаем только свойство "surname"
+  //     //   const id = childSnapshot.key; // получаем ключ объекта
+  //     //   workersData.push({ id, surname }); // добавляем объект в массив
+  //     // });
+  //     controllersSnapshot.forEach((childSnapshot) => {
+  //       const { surname } = childSnapshot.val(); // получаем только свойство "surname"
+  //       const id = childSnapshot.key; // получаем ключ объекта
+  //       controllersData.push({ id, surname }); // добавляем объект в массив
+  //     });
+  //     // setWorkerOptions(workersData);
+  //     setControllerOptions(controllersData);
+  //     // console.log(workersData);
+  //   };
+  //   fetchOptions();
+  // }, []);
 
-  const [workerOptions, setWorkerOptions] = useState([]);
-  const [selectedWorker, setSelectedWorker] = useState({
-    id: "",
-    surname: "",
-  });
+  // const [workerOptions, setWorkerOptions] = useState([]);
+  // const [selectedWorker, setSelectedWorker] = useState({
+  //   id: "",
+  //   surname: "",
+  // });
 
-  const [controllerOptions, setControllerOptions] = useState([]);
-  const [selectedController, setSelectedController] = useState({
-    id: "",
-    surname: "",
-  });
+  // const [controllerOptions, setControllerOptions] = useState([]);
+  // const [selectedController, setSelectedController] = useState({
+  //   id: "",
+  //   surname: "",
+  // });
 
-  const handleWorkerOptionChange = (event) => {
-    const selectedItem = workerOptions.find(
-      (item) => item.id === event.target.value
-    );
-    setSelectedWorker(selectedItem);
-    changeValue.workerID = selectedItem.id;
-    changeValue.workerSurname = selectedItem.surname;
-  };
+  // const handleWorkerOptionChange = (event) => {
+  //   const selectedItem = workerOptions.find(
+  //     (item) => item.id === event.target.value
+  //   );
+  //   setSelectedWorker(selectedItem);
+  //   changeValue.workerID = selectedItem.id;
+  //   changeValue.workerSurname = selectedItem.surname;
+  // };
 
-  const handleControllerOptionChange = (event) => {
-    const selectedItem = controllerOptions.find(
-      (item) => item.id === event.target.value
-    );
-    setSelectedController(selectedItem);
-    changeValue.controllerID = selectedItem.id;
-    changeValue.controllerSurname = selectedItem.surname;
-  };
+  // const handleControllerOptionChange = (event) => {
+  //   const selectedItem = controllerOptions.find(
+  //     (item) => item.id === event.target.value
+  //   );
+  //   setSelectedController(selectedItem);
+  //   changeValue.controllerID = selectedItem.id;
+  //   changeValue.controllerSurname = selectedItem.surname;
+  // };
 
   const alert = useContext(AlertContext);
   const firebase = useContext(ReportsFirebaseContext);
@@ -185,13 +185,13 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
             />
           </div>
         </form>
-        <form onSubmit={submitChangeHandler}>
-          {/*worker*/}
+        {/* <form onSubmit={submitChangeHandler}>
+          worker
           <label for="worker" className="form-label">
             worker
           </label>
           <div className="form-group mx-3">
-            {/* <input
+            <input
               maxLength="20"
               id="worker"
               type={"text"}
@@ -201,7 +201,7 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
               onChange={(e) =>
                 setChangeValue({ ...changeValue, worker: e.target.value })
               }
-            /> */}
+            />
             <select
               id="options-select"
               className="form-control"
@@ -215,7 +215,7 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
               ))}
             </select>
           </div>
-        </form>
+        </form> */}
         <br></br>
         <div>
           <button
@@ -248,13 +248,13 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
             />
           </div>
         </form>
-        <form onSubmit={submitChangeHandler}>
-          {/*controller*/}
+        {/* <form onSubmit={submitChangeHandler}>
+          controller
           <label for="controller" className="form-label">
             controller
           </label>
           <div className="form-group mx-3">
-            {/* <input
+            <input
               maxLength="20"
               id="controller"
               type={"text"}
@@ -264,7 +264,7 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
               onChange={(e) =>
                 setChangeValue({ ...changeValue, controller: e.target.value })
               }
-            /> */}
+            />
             <select
               id="options-select"
               className="form-control"
@@ -278,9 +278,9 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
               ))}
             </select>
           </div>
-        </form>
-        <form onSubmit={submitChangeHandler}>
-          {/*controllerDateStamp*/}
+        </form> */} {/*controller*/}
+        {/* <form onSubmit={submitChangeHandler}>
+          controllerDateStamp
           <label for="controllerDateStamp" className="form-label">
             controllerDateStamp
           </label>
@@ -299,7 +299,7 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
               }
             />
           </div>
-        </form>
+        </form> */} {/*controllerDateStamp*/}
         <form onSubmit={submitChangeHandler}>
           {/*operationsCount*/}
           <label for="operationsCount" className="form-label">

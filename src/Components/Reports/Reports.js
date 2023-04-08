@@ -14,10 +14,6 @@ export const Reports = () => {
           <th scope="col">batchID</th>
           <th scope="col">blueprint</th>
           <th scope="col" style={{width:"100px"}}>detailsNumber</th>
-          <th scope="col">workerSurname</th>
-          {/* <th scope="col">workerDateStamp</th> */}
-          <th scope="col">controller</th>
-          <th scope="col" style={{width:"100px"}}>controllerDateStamp</th>
           <th scope="col" style={{width:"100px"}}>operationsCount</th>
         </tr>
       </thead>
@@ -27,12 +23,7 @@ export const Reports = () => {
             <td>{data.batchID}</td>
             <td>{data.blueprint}</td>
             <td>{data.detailsNumber}</td>
-            <td>{data.workerSurname}</td>
-            {/* <td>{data.workerDateStamp}</td> */}
-            <td>{data.controllerSurname}</td>
-            <td>{data.controllerDateStamp}</td>
-            <td>{data.all}</td>
-            {/* <td>{data.operations}</td> */}
+            <td>{data.completed}/{data.all}</td>
             <DeleteButton
               WhatRemove={{ id: data.id, removeFunction: removeData }}
             />

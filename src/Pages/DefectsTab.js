@@ -7,16 +7,16 @@ import React, {
 } from "react";
 import { SearchForm } from "../Components/SearchForm";
 import Loader from "../Components/Loader";
-import ReportsList from "../Components/Reports/ReportsList";
-import { ReportsFirebaseContext } from "../Context/reportsFirebase/reportsFirebaseContext";
+import DefectsList from "../Components/Defects/DefectsList"
+import { FirebaseContext } from "../Context/Firebase/defectsFirebaseContext";
 import ModalForm from "../Components/Modal/ModalForm";
-import CreateReports from "../Components/Reports/CreateReports";
-import ChangeReports from "../Components/Reports/ChangeReports";
+import CreateDefects from "../Components/Defects/CreateDefects"
+import ChangeDefects from "../Components/Defects/ChangeDefects"
 import { WorkersContext } from "../Context/Notes/WorkersContext";
 
-export const ReportTab = () => {
+export const DefectsTab = () => {
   const { loading, data, fetchData, removeData } = useContext(
-    ReportsFirebaseContext
+    FirebaseContext
   );
   const [filter, setFilter] = useState({
     sortQuery: "",
@@ -70,13 +70,14 @@ export const ReportTab = () => {
         sortOptions={[
           { value: "batchID", name: "Пошук за batchID" },
           { value: "blueprint", name: "Пошук за blueprint" },
+          { value: "operation", name: "Пошук за operation" },
           { value: "detailsNumber", name: "Пошук за detailsNumber" },
-          // { value: "workerID", name: "Пошук за workerID" },
+          { value: "defectiveDetails", name: "Пошук за defectiveDetails" },
           { value: "workerSurname", name: "Пошук за workerSurname" },
-          { value: "workerDateStamp", name: "Пошук за workerDateStamp" },
           // { value: "controllerID", name: "Пошук за controllerID" },
           { value: "controllerSurname", name: "Пошук за controllerSurname" },
           { value: "controllerDateStamp", name: "Пошук за controllerDateStamp" },
+          { value: "defectType", name: "Пошук за defectType" },
         ]}
       />
       <button
@@ -89,10 +90,10 @@ export const ReportTab = () => {
       </button>
       <hr />
       <ModalForm isVisible={isAddVisible} setVisible={setAddVisible}>
-        <CreateReports setModalState={setAddVisible} />
+        <CreateDefects setModalState={setAddVisible} />
       </ModalForm>
       <ModalForm isVisible={isChangeVisible} setVisible={setChangeVisible}>
-        <ChangeReports isVisible={isChangeVisible} setModalState={setChangeVisible} postId={postId} />
+        <ChangeDefects isVisible={isChangeVisible} setModalState={setChangeVisible} postId={postId} />
       </ModalForm>
 
       <WorkersContext.Provider
@@ -103,7 +104,7 @@ export const ReportTab = () => {
           setPostId: setPostId,
         }}
       >
-        {loading ? <Loader /> : <ReportsList />}
+        {loading ? <Loader /> : <DefectsList />}
       </WorkersContext.Provider>
       <div>
         <button

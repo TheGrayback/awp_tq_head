@@ -1,12 +1,12 @@
 import React from "react";
-import { Reports } from "./Reports";
+import { Defects } from "./Defects";
 
-const ReportsList = () => {
+const DefectsList = () => {
   return (
     <div>
-      <Reports />
+      <Defects />
     </div>
   );
 };
 
-export default ReportsList;
+export default DefectsList;
