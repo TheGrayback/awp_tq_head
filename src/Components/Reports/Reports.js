@@ -1,6 +1,6 @@
 import React from "react";
-import ChangeButton from "./ChangeButton";
-import DeleteButton from "./DeleteButton";
+import ChangeButton from "../ChangeButton";
+import DeleteButton from "../DeleteButton";
 import { useContext } from "react";
 import { WorkersContext } from "../../Context/Notes/WorkersContext";
 
@@ -11,10 +11,11 @@ export const Reports = () => {
     <table className="table table-bordered table-hover table-sm">
       <thead>
         <tr>
-          <th scope="col">batchID</th>
-          <th scope="col">blueprint</th>
-          <th scope="col" style={{width:"100px"}}>detailsNumber</th>
-          <th scope="col" style={{width:"100px"}}>operationsCount</th>
+          <th scope="col">ID партії</th>
+          <th scope="col">Креслення</th>
+          <th scope="col" style={{width:"150px"}}>К-ть деталей</th>
+          <th scope="col" style={{width:"150px"}}>К-ть операцій</th>
+          <th scope="col">Статус</th>
         </tr>
       </thead>
       <tbody>
@@ -22,8 +23,9 @@ export const Reports = () => {
           <tr key={data.id}>
             <td>{data.batchID}</td>
             <td>{data.blueprint}</td>
-            <td>{data.detailsNumber}</td>
-            <td>{data.completed}/{data.all}</td>
+            <td>{Number(data.detailsNumber)}</td>
+            <td>{Number(data.completed)}/{Number(data.all)}</td>
+            <td>{data.status}</td>
             <DeleteButton
               WhatRemove={{ id: data.id, removeFunction: removeData }}
             />

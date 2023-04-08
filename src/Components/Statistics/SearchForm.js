@@ -30,33 +30,34 @@ export const SearchForm = ({ filter, setFilter, sortOptions }) => {
   return (
     <div className="my-3">
       <div className="input-group w-75 mx-auto">
-        <input
+        {/* <input
           type={"text"}
           className="form-control w-50"
-          placeholder="Пошук"
+          placeholder="Search note by"
           value={filter.searchQuery}
           onChange={(e) =>
             setFilter({ ...filter, searchQuery: e.target.value })
           }
-        />
-        <select
+        /> */}
+        {/* <select
           className="form-select"
           value={filter.searchKey}
           onChange={(e) => setFilter({ ...filter, searchKey: e.target.value })}
         >
+          <option disabled>Open this select menu</option>
           {sortOptions.map((option) => (
             <option key={option.value} value={option.value}>
               {option.name}
             </option>
           ))}
-        </select>
+        </select> */}
       </div>
 
       <form className="mx-3 my-3">
-        <div>
         <label for="sort" className="form-label">
           Сортування
-        </label>  
+        </label>
+        <div>
           <select
             id="sort"
             className="form-select form-select-sm w-25"
@@ -65,6 +66,7 @@ export const SearchForm = ({ filter, setFilter, sortOptions }) => {
               setFilter({ ...filter, sortQuery: e.target.value })
             }
           >
+            <option disabled>Open this select menu</option>
             {sortOptions.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.name}

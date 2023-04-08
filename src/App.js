@@ -5,7 +5,7 @@ import { WorkerTab } from "./Pages/WorkerTab";
 import { ReportTab } from "./Pages/ReportTab";
 import { ControllerTab } from "./Pages/ControllerTab";
 import { DefectsTab } from "./Pages/DefectsTab";
-import { Statistics } from "./Pages/Statistics";
+import { StatisticsTab } from "./Pages/StatisticsTab";
 import { Navbar } from "./Components/Navbar";
 import { Alert } from "./Components/Alert";
 import AlertState from "./Context/Alert/AlertState";
@@ -30,7 +30,7 @@ function App() {
                   <Route path={"/controllers"} element={<ControllerTab />} />
                   <Route path={"/reports"} element={<ReportTab />} />
                   <Route path={"/defects"} element={<DefectsTab />} />
-                  <Route path={"/statistics"} element={<Statistics />} />
+                  <Route path={"/statistics"} element={<StatisticsTab />} />
                 </Routes>
               </Router>
             </AlertState>

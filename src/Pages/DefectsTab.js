@@ -35,8 +35,13 @@ export const DefectsTab = () => {
 
   const sortedData = useMemo(() => {
     if (filter.sortQuery) {
-      return [...data].sort((a, b) =>
-        a[filter.sortQuery].localeCompare(b[filter.sortQuery])
+      return [...data].sort((a, b) => {
+        if(typeof(a[filter.sortQuery]) == 'number' && typeof(b[filter.sortQuery]) == 'number') {
+          return data.sort((a, b) => a[filter.sortQuery] - b[filter.sortQuery]);
+        } else {
+          return a[filter.sortQuery].localeCompare(b[filter.sortQuery])
+        }
+      }
       );
     } else {
       return data;
@@ -46,7 +51,7 @@ export const DefectsTab = () => {
   const searchedData = useMemo(() => {
     if (filter.searchQuery) {
       return sortedData.filter((data) =>
-        data[filter.searchKey].toLowerCase().includes(filter.searchQuery)
+        data[filter.searchKey].toString().toLowerCase().includes(filter.searchQuery)
       );
     } else {
       return sortedData;
@@ -68,16 +73,15 @@ export const DefectsTab = () => {
         filter={filter}
         setFilter={setFilter}
         sortOptions={[
-          { value: "batchID", name: "Пошук за batchID" },
-          { value: "blueprint", name: "Пошук за blueprint" },
-          { value: "operation", name: "Пошук за operation" },
-          { value: "detailsNumber", name: "Пошук за detailsNumber" },
-          { value: "defectiveDetails", name: "Пошук за defectiveDetails" },
-          { value: "workerSurname", name: "Пошук за workerSurname" },
-          // { value: "controllerID", name: "Пошук за controllerID" },
-          { value: "controllerSurname", name: "Пошук за controllerSurname" },
-          { value: "controllerDateStamp", name: "Пошук за controllerDateStamp" },
-          { value: "defectType", name: "Пошук за defectType" },
+          { value: "batchID", name: " за ID партії" },
+          { value: "blueprint", name: " за кресленням" },
+          { value: "operation", name: " за операцією" },
+          { value: "detailsNumber", name: " за к-стю деталей" },
+          { value: "defectiveDetails", name: " за бракованими деталями" },
+          { value: "workerSurname", name: " за прізв. робочого" },
+          { value: "controllerSurname", name: " за прізв. контролера" },
+          { value: "controllerDateStamp", name: " за датою перевірки" },
+          { value: "defectType", name: " за типом браку" },
         ]}
       />
       <button
@@ -86,7 +90,7 @@ export const DefectsTab = () => {
           setAddVisible(true);
         }}
       >
-        Create Post
+        Створити
       </button>
       <hr />
       <ModalForm isVisible={isAddVisible} setVisible={setAddVisible}>
@@ -111,14 +115,14 @@ export const DefectsTab = () => {
           disabled={currentPage === 1}
           onClick={() => handlePageChange(currentPage - 1)}
         >
-          Предыдущая страница
+          Попередня сторінка
         </button>
         <button>{currentPage}</button>
         <button
           disabled={currentPage === Math.ceil(searchedData.length / 10)}
           onClick={() => handlePageChange(currentPage + 1)}
         >
-          Следующая страница
+          Наступна сторінка
         </button>
       </div>
     </Fragment>

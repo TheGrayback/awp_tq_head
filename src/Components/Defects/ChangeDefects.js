@@ -179,7 +179,7 @@ const ChangeDefects = ({ isVisible, setModalState, postId: postData }) => {
               className="form-control"
               value={selectedBatch.reportID}
               onChange={handleBatchOptionChange}
-            >
+            ><option selected>Заглушка</option>
               {batchOptions.map((option) => (
                 <option key={option.reportID} value={option.reportID}>
                   {option.batchID}
@@ -302,7 +302,7 @@ const ChangeDefects = ({ isVisible, setModalState, postId: postData }) => {
               className="form-control"
               value={selectedWorker.id}
               onChange={handleWorkerOptionChange}
-            >
+            ><option selected>Заглушка</option>
               {workerOptions.map((option) => (
                 <option key={option.id} value={option.id}>
                   {option.surname}
@@ -351,7 +351,7 @@ const ChangeDefects = ({ isVisible, setModalState, postId: postData }) => {
               className="form-control"
               value={selectedController.id}
               onChange={handleControllerOptionChange}
-            >
+            ><option selected>Заглушка</option>
               {controllerOptions.map((option) => (
                 <option key={option.id} value={option.id}>
                   {option.surname}

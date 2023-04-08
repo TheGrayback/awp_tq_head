@@ -10,16 +10,6 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
     batchID: postData.batchID, //ID партии деталей
     blueprint: postData.blueprint,
     detailsNumber: postData.detailsNumber,
-    // //--WORKER--
-    // workerID: postData.workerID,
-    // workerSurname: postData.workerSurname,
-    // workerDateStamp: postData.workerDateStamp,
-    // //--WORKER--
-    // //--CONTROLLER--
-    // controllerID: postData.controllerID,
-    // controllerSurname: postData.controllerSurname,
-    // controllerDateStamp: postData.controllerDateStamp,
-    // //--CONTROLLER--
     all: postData.all,
     completed: postData.completed,
     defects: postData.defects,
@@ -227,8 +217,8 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
         </div>
       </div>
       <div>
-        <form onSubmit={submitChangeHandler}>
-          {/*workerDateStamp*/}
+        {/* <form onSubmit={submitChangeHandler}>
+          workerDateStamp
           <label for="workerDateStamp" className="form-label">
             workerDateStamp
           </label>
@@ -247,7 +237,7 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
               }
             />
           </div>
-        </form>
+        </form> */}
         {/* <form onSubmit={submitChangeHandler}>
           controller
           <label for="controller" className="form-label">
@@ -305,6 +295,7 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
           <label for="operationsCount" className="form-label">
             operationsCount
           </label>
+
           <div className="form-group mx-3">
             <input
               max={100}
@@ -312,27 +303,46 @@ const ChangeReports = ({ isVisible, setModalState, postId: postData }) => {
               id="operationsCount"
               type={"number"}
               className="form-control"
-              placeholder="Enter operationsCount"
+              placeholder="Enter all operationsCount"
               value={changeValue.all}
               onChange={(e) =>
-                setChangeValue({
-                  ...changeValue,
-                  all: e.target.value,
-                })
+                setChangeValue({ ...changeValue, all: e.target.value })
               }
             />
+          </div>
+          <label for="operationsCompleted" className="form-label">
+          operationsCompleted
+          </label>
+          <div className="form-group mx-3">
             <input
-              max={100}
+              max={changeValue.all}
               min={0}
+              id="operationsCompleted"
               type={"number"}
               className="form-control"
-              placeholder="Enter operationsCount"
+              placeholder="Enter completed operationsCount"
               value={changeValue.completed}
               onChange={(e) =>
-                setChangeValue({
-                  ...changeValue,
-                  completed: e.target.value,
-                })
+                setChangeValue({ ...changeValue, completed: e.target.value })
+              }
+            />
+          </div>
+        </form>
+        <form onSubmit={submitChangeHandler}>
+          {/*status*/}
+          <label for="status" className="form-label">
+          status
+          </label>
+          <div className="form-group mx-3">
+            <input
+              maxLength="25"
+              id="status"
+              type={"text"}
+              className="form-control"
+              placeholder="Enter status"
+              value={changeValue.status}
+              onChange={(e) =>
+                setChangeValue({ ...changeValue, status: e.target.value })
               }
             />
           </div>

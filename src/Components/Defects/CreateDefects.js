@@ -11,8 +11,8 @@ const CreateDefects = ({ setModalState }) => {
     batchID: "",
     blueprint: "",
     operation: "",
-    detailsNumber: "",
-    defectiveDetails: "",
+    detailsNumber: 0,
+    defectiveDetails: 0,
     //--WORKER--
     workerID: "",
     workerSurname: "",
@@ -78,7 +78,7 @@ const CreateDefects = ({ setModalState }) => {
     reportID: "", //ID партии деталей
     batchID: "",
     blueprint: "",
-    detailsNumber: "",
+    detailsNumber: 0,
   });
 
   const handleWorkerOptionChange = (event) => {
@@ -114,7 +114,7 @@ const CreateDefects = ({ setModalState }) => {
     for (let prop in obj) {
       if (
         obj.hasOwnProperty(prop) &&
-        (obj[prop].trim() === "" ||
+        (obj[prop] === "" ||
           obj[prop] === null ||
           obj[prop] === undefined)
       ) {
@@ -150,7 +150,7 @@ const CreateDefects = ({ setModalState }) => {
           {/*batchID*/}
           <div className="form-group mx-3">
             <label for="batchID" className="form-label">
-              batchID
+              ID партії
             </label>
             {/* <input
               maxLength="20"
@@ -169,6 +169,7 @@ const CreateDefects = ({ setModalState }) => {
               value={selectedBatch.reportID}
               onChange={handleBatchOptionChange}
             >
+              <option selected>Заглушка</option>
               {batchOptions.map((option) => (
                 <option key={option.reportID} value={option.reportID}>
                   {option.batchID}
@@ -180,7 +181,7 @@ const CreateDefects = ({ setModalState }) => {
         <form onSubmit={submitAddDataHandler}>
           {/*blueprint*/}
           <label for="blueprint" className="form-label">
-            blueprint
+            Креслення
           </label>
           <div className="form-group mx-3">
             <input
@@ -200,7 +201,7 @@ const CreateDefects = ({ setModalState }) => {
         <form onSubmit={submitAddDataHandler}>
           {/*operation*/}
           <label for="operation" className="form-label">
-            operation
+            Операція
           </label>
           <div className="form-group mx-3">
             <input
@@ -219,7 +220,7 @@ const CreateDefects = ({ setModalState }) => {
         <form onSubmit={submitAddDataHandler}>
           {/*detailsNumber*/}
           <label for="detailsNumber" className="form-label">
-            detailsNumber
+            К-ть деталей
           </label>
           <div className="form-group mx-3">
             <input
@@ -240,7 +241,7 @@ const CreateDefects = ({ setModalState }) => {
         <form onSubmit={submitAddDataHandler}>
           {/*defectiveDetails*/}
           <label for="defectiveDetails" className="form-label">
-            defectiveDetails
+            К-ть браку
           </label>
           <div className="form-group mx-3">
             <input
@@ -264,7 +265,7 @@ const CreateDefects = ({ setModalState }) => {
             className="btn btn-success mx-3"
             onClick={submitAddDataHandler}
           >
-            Create worker
+            Створити
           </button>
         </div>
       </div>
@@ -272,7 +273,7 @@ const CreateDefects = ({ setModalState }) => {
         <form onSubmit={submitAddDataHandler}>
           {/*worker*/}
           <label for="worker" className="form-label">
-            worker
+            Робітник
           </label>
           <div className="form-group mx-3">
             {/* <input
@@ -291,7 +292,7 @@ const CreateDefects = ({ setModalState }) => {
               className="form-control"
               value={selectedWorker.id}
               onChange={handleWorkerOptionChange}
-            >
+            ><option selected>Заглушка</option>
               {workerOptions.map((option) => (
                 <option key={option.id} value={option.id}>
                   {option.surname}
@@ -303,7 +304,7 @@ const CreateDefects = ({ setModalState }) => {
         <form onSubmit={submitAddDataHandler}>
           {/*workerDateStamp*/}
           <label for="workerDateStamp" className="form-label">
-            workerDateStamp
+            Дата виконання
           </label>
           <div className="form-group mx-3">
             <input
@@ -321,7 +322,7 @@ const CreateDefects = ({ setModalState }) => {
         <form onSubmit={submitAddDataHandler}>
           {/*controller*/}
           <label for="controller" className="form-label">
-            controller
+            Контролер
           </label>
           <div className="form-group mx-3">
             {/* <input
@@ -340,7 +341,7 @@ const CreateDefects = ({ setModalState }) => {
               className="form-control"
               value={selectedController.id}
               onChange={handleControllerOptionChange}
-            >
+            ><option selected>Заглушка</option>
               {controllerOptions.map((option) => (
                 <option key={option.id} value={option.id}>
                   {option.surname}
@@ -352,7 +353,7 @@ const CreateDefects = ({ setModalState }) => {
         <form onSubmit={submitAddDataHandler}>
           {/*controllerDateStamp*/}
           <label for="controllerDateStamp" className="form-label">
-            controllerDateStamp
+            Дата перевірки
           </label>
           <div className="form-group mx-3">
             <input
@@ -375,7 +376,7 @@ const CreateDefects = ({ setModalState }) => {
         <form>
           {/*defectType*/}
           <label for="defectType" className="form-label">
-            defectType
+            Тип браку
           </label>
           <div className="form-group mx-3">
             <input
@@ -394,7 +395,7 @@ const CreateDefects = ({ setModalState }) => {
         <form>
           {/*reason*/}
           <label for="reason" className="form-label">
-            reason
+            Причина
           </label>
           <div className="form-group mx-3">
             <textarea
@@ -418,7 +419,7 @@ const CreateDefects = ({ setModalState }) => {
         <form>
           {/*summary*/}
           <label for="summary" className="form-label">
-            summary
+            Підсумок
           </label>
           <div className="form-group mx-3">
             <textarea
@@ -440,7 +441,7 @@ const CreateDefects = ({ setModalState }) => {
         <form>
           {/*autograph*/}
           <label for="autograph" className="form-label">
-            autograph
+            Підпис
           </label>
           <div className="form-group mx-3">
             <input

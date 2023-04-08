@@ -81,8 +81,8 @@ export const DefectsFirebaseState = ({ children }) => {
       batchID,
       blueprint,
       operation,
-      detailsNumber,
-      defectiveDetails,
+      detailsNumber: Number(detailsNumber),
+      defectiveDetails: Number(defectiveDetails),
       //--WORKER--
       workerID,
       workerSurname,
@@ -144,8 +144,8 @@ export const DefectsFirebaseState = ({ children }) => {
       batchID,
       blueprint,
       operation,
-      detailsNumber,
-      defectiveDetails,
+      detailsNumber: Number(detailsNumber),
+      defectiveDetails: Number(defectiveDetails),
       //--WORKER--
       workerID,
       workerSurname,

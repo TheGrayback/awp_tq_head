@@ -45,7 +45,7 @@ export const ControllerTab = () => {
   const searchedData = useMemo(() => {
     if (filter.searchQuery) {
       return sortedData.filter((data) =>
-        data[filter.searchKey].toLowerCase().includes(filter.searchQuery)
+        data[filter.searchKey].toString().toLowerCase().includes(filter.searchQuery)
       );
     } else {
       return sortedData;
@@ -66,12 +66,12 @@ export const ControllerTab = () => {
         filter={filter}
         setFilter={setFilter}
         sortOptions={[
-          { value: "u_id", name: "Пошук за u_id" },
-          { value: "surname", name: "Пошук за surname" },
-          { value: "name", name: "Пошук за name" },
-          { value: "patronymic", name: "Пошук за patronymic" },
-          { value: "birthdate", name: "Пошук за birthdate" },
-          { value: "post", name: "Пошук за post" },
+          { value: "u_id", name: " за робочим ID" },
+          { value: "surname", name: " за прізвищем" },
+          { value: "name", name: " за ім'ям" },
+          { value: "patronymic", name: " по-батькові" },
+          { value: "birthdate", name: " за датою народження" },
+          { value: "post", name: " за посадою" },
         ]}
       />
       <button
@@ -80,7 +80,7 @@ export const ControllerTab = () => {
           setAddVisible(true);
         }}
       >
-        Create Post
+        Створити
       </button>
       <hr />
       <ModalForm isVisible={isAddVisible} setVisible={setAddVisible}>
@@ -105,14 +105,14 @@ export const ControllerTab = () => {
           disabled={currentPage === 1}
           onClick={() => handlePageChange(currentPage - 1)}
         >
-          Предыдущая страница
+          Попередня сторінка
         </button>
         <button>{currentPage}</button>
         <button
           disabled={currentPage === Math.ceil(searchedData.length / 10)}
           onClick={() => handlePageChange(currentPage + 1)}
         >
-          Следующая страница
+          Наступна сторінка
         </button>
       </div>
     </Fragment>

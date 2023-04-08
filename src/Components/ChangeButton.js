@@ -10,7 +10,7 @@ const ChangeButton = ({ setChangeVisible, setPostId, currentData }) => {
         setPostId(currentData);
       }}
     >
-      Change
+      Змінити
     </button>
   );
 };

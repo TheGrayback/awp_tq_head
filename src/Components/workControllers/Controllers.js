@@ -1,6 +1,6 @@
 import React from "react";
-import ChangeButton from "./ChangeButton";
-import DeleteButton from "./DeleteButton";
+import ChangeButton from "../ChangeButton";
+import DeleteButton from "../DeleteButton";
 import { useContext } from "react";
 import { WorkersContext } from "../../Context/Notes/WorkersContext";
 
@@ -10,14 +10,13 @@ export const Controllers = () => {
   return (
     <table className="table table-bordered table-hover table-sm">
       <thead>
-        <tr>
+      <tr>
           <th scope="col">ID</th>
-          <th scope="col">surname</th>
-          <th scope="col">name</th>
-          <th scope="col">patronymic</th>
-          <th scope="col">birthdate</th>
-          {/* <th scope="col">profession</th> */}
-          <th scope="col">post</th>
+          <th scope="col">Прізвище</th>
+          <th scope="col">Ім'я</th>
+          <th scope="col">По-батькові</th>
+          <th scope="col">День народження</th>
+          <th scope="col">Посада</th>
         </tr>
       </thead>
       <tbody>

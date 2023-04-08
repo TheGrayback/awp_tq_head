@@ -1,6 +1,6 @@
 import React from "react";
-import ChangeButton from "./ChangeButton";
-import DeleteButton from "./DeleteButton";
+import ChangeButton from "../ChangeButton";
+import DeleteButton from "../DeleteButton";
 import { useContext } from "react";
 import { WorkersContext } from "../../Context/Notes/WorkersContext";
 
@@ -11,14 +11,14 @@ export const Defects = () => {
     <table className="table table-bordered table-hover table-sm">
       <thead>
         <tr>
-          <th scope="col">batchID</th>
-          <th scope="col">blueprint</th>
-          <th scope="col" style={{width:"100px"}}>detailsNumber</th>
-          <th scope="col" style={{width:"100px"}}>defectiveDetails</th>
-          <th scope="col">workerSurname</th>
-          <th scope="col">controllerSurname</th>
-          <th scope="col" style={{width:"100px"}}>controllerDateStamp</th>
-          <th scope="col">defectType</th>
+          <th scope="col">ID партії</th>
+          <th scope="col">Креслення</th>
+          <th scope="col" style={{width:"150px"}}>К-ть деталей</th>
+          <th scope="col" style={{width:"150px"}}>К-ть бракованих</th>
+          <th scope="col">Прізв. робітника</th>
+          <th scope="col">Прізв. контролера</th>
+          <th scope="col" style={{width:"100px"}}>Дата перевірки</th>
+          <th scope="col">Тип браку</th>
         </tr>
       </thead>
       <tbody>

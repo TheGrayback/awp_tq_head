@@ -63,20 +63,16 @@ export const ReportsFirebaseState = ({ children }) => {
     // controllerDateStamp,
     all,
     completed,
+    status,
     defects,
   }) => {
     const data = {
       batchID, //ID партии деталей
       blueprint,
-      detailsNumber,
-      // workerID,
-      // workerSurname,
-      // workerDateStamp,
-      // controllerID,
-      // controllerSurname,
-      // controllerDateStamp,
-      all,
-      completed,
+      detailsNumber: Number(detailsNumber),
+      all: Number(all),
+      completed: Number(completed),
+      status,
       defects,
     };
     try {
@@ -108,8 +104,10 @@ export const ReportsFirebaseState = ({ children }) => {
       // controllerID,
       // controllerSurname,
       // controllerDateStamp,
+
       all,
       completed,
+      status,
       defects,
     }
   ) => {
@@ -117,15 +115,10 @@ export const ReportsFirebaseState = ({ children }) => {
     const data = {
       batchID, //ID партии деталей
       blueprint,
-      detailsNumber,
-      // workerID,
-      // workerSurname,
-      // workerDateStamp,
-      // controllerID,
-      // controllerSurname,
-      // controllerDateStamp,
-      all,
-      completed,
+      detailsNumber: Number(detailsNumber),
+      all: Number(all),
+      completed: Number(completed),
+      status,
       defects,
     };
     // console.log(data);

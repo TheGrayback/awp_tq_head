@@ -9,19 +9,10 @@ const CreateReports = ({ setModalState }) => {
   const [addValue, setAddValue] = useState({
     batchID: "", //ID партии деталей
     blueprint: "",
-    detailsNumber: "",
-    // //--WORKER--
-    // workerID: "",
-    // workerSurname: "",
-    // workerDateStamp: "",
-    // //--WORKER--
-    // //--CONTROLLER--
-    // controllerID: "",
-    // controllerSurname: "",
-    // controllerDateStamp: "",
-    // //--CONTROLLER--
-    all: "",
-    completed: "",
+    detailsNumber: 0,
+    all: 0,
+    completed: 0,
+    status: "",
     defects: "",
   });
 
@@ -121,7 +112,7 @@ const CreateReports = ({ setModalState }) => {
           {/*batchID*/}
           <div className="form-group mx-3">
             <label for="batchID" className="form-label">
-              batchID
+              ID партії
             </label>
             <input
               maxLength="20"
@@ -139,7 +130,7 @@ const CreateReports = ({ setModalState }) => {
         <form onSubmit={submitAddDataHandler}>
           {/*blueprint*/}
           <label for="blueprint" className="form-label">
-            blueprint
+            Креслення
           </label>
           <div className="form-group mx-3">
             <input
@@ -158,7 +149,7 @@ const CreateReports = ({ setModalState }) => {
         <form onSubmit={submitAddDataHandler}>
           {/*detailsNumber*/}
           <label for="detailsNumber" className="form-label">
-            detailsNumber
+            К-ть деталей
           </label>
           <div className="form-group mx-3">
             <input
@@ -212,13 +203,13 @@ const CreateReports = ({ setModalState }) => {
             className="btn btn-success mx-3"
             onClick={submitAddDataHandler}
           >
-            Create worker
+            Створити
           </button>
         </div>
       </div>
       <div>
-        {/* <form onSubmit={submitAddDataHandler}> */}
-        {/*workerDateStamp*/}
+        {/* <form onSubmit={submitAddDataHandler}>
+        workerDateStamp
         <label for="workerDateStamp" className="form-label">
           workerDateStamp
         </label>
@@ -234,7 +225,7 @@ const CreateReports = ({ setModalState }) => {
             }
           />
         </div>
-        {/* </form> */}
+        </form> */}
         {/* <form onSubmit={submitAddDataHandler}>
           
           <label for="controller" className="form-label">
@@ -292,7 +283,7 @@ const CreateReports = ({ setModalState }) => {
         <form onSubmit={submitAddDataHandler}>
           {/*operationsCount*/}
           <label for="operationsCount" className="form-label">
-            operationsCount
+            К-ть операцій
           </label>
 
           <div className="form-group mx-3">
@@ -310,7 +301,7 @@ const CreateReports = ({ setModalState }) => {
             />
           </div>
           <label for="operationsCompleted" className="form-label">
-          operationsCompleted
+          Схвалені операції
           </label>
           <div className="form-group mx-3">
             <input
@@ -327,11 +318,30 @@ const CreateReports = ({ setModalState }) => {
             />
           </div>
         </form>
+        <form onSubmit={submitAddDataHandler}>
+          {/*status*/}
+          <label for="status" className="form-label">
+          Статус
+          </label>
+          <div className="form-group mx-3">
+            <input
+              maxLength="25"
+              id="status"
+              type={"text"}
+              className="form-control"
+              placeholder="Enter status"
+              value={addValue.status}
+              onChange={(e) =>
+                setAddValue({ ...addValue, status: e.target.value })
+              }
+            />
+          </div>
+        </form>
       </div>
       <form>
         {/*defects*/}
         <label for="defects" className="form-label">
-          defects
+          Примітки
         </label>
         <div className="form-group mx-3">
           <textarea

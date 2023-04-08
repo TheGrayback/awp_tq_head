@@ -7,7 +7,7 @@ const DeleteButton = ({ WhatRemove }) => {
       className="btn btn-outline-danger btn-sm"
       onClick={() => WhatRemove.removeFunction(WhatRemove.id)}
     >
-      Delete
+      Видалити
     </button>
   );
 };

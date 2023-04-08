@@ -5,16 +5,16 @@ import React, {
     useMemo,
     useState,
   } from "react";
-  import { SearchForm } from "../Components/SearchForm";
+  import { SearchForm } from "../Components/Statistics/SearchForm";
   import Loader from "../Components/Loader";
-  import WorkersList from "../Components/WorkersList";
+  import StaticsList from "../Components/Statistics/StatisticsList";
   import { FirebaseContext } from "../Context/Firebase/FirebaseContext";
   import ModalForm from "../Components/Modal/ModalForm";
   import CreateWorker from "../Components/CreateWorker";
   import ChangeWorker from "../Components/ChangeWorker";
   import { WorkersContext } from "../Context/Notes/WorkersContext";
   
-  export const Statistics = () => {
+  export const StatisticsTab = () => {
     const { loading, data, fetchData, removeData } = useContext(FirebaseContext);
     const [filter, setFilter] = useState({
       sortQuery: "",
@@ -34,8 +34,13 @@ import React, {
   
     const sortedData = useMemo(() => {
       if (filter.sortQuery) {
-        return [...data].sort((a, b) =>
-          a[filter.sortQuery].localeCompare(b[filter.sortQuery])
+        return [...data].sort((a, b) => {
+          if(typeof(a[filter.sortQuery]) == 'number' && typeof(b[filter.sortQuery]) == 'number') {
+            return data.sort((a, b) => a[filter.sortQuery] - b[filter.sortQuery]);
+          } else {
+            return a[filter.sortQuery].localeCompare(b[filter.sortQuery])
+          }
+        }
         );
       } else {
         return data;
@@ -45,7 +50,7 @@ import React, {
     const searchedData = useMemo(() => {
       if (filter.searchQuery) {
         return sortedData.filter((data) =>
-          data[filter.searchKey].toLowerCase().includes(filter.searchQuery)
+          data[filter.searchKey].toString().toLowerCase().includes(filter.searchQuery)
         );
       } else {
         return sortedData;
@@ -60,36 +65,33 @@ import React, {
   
     return (
       <Fragment>
-        
-  
         <SearchForm
           filter={filter}
           setFilter={setFilter}
           sortOptions={[
-            { value: "u_id", name: "Пошук за u_id" },
-            { value: "surname", name: "Пошук за surname" },
-            { value: "name", name: "Пошук за name" },
-            { value: "patronymic", name: "Пошук за patronymic" },
-            { value: "birthdate", name: "Пошук за birthdate" },
-            { value: "profession", name: "Пошук за profession" },
-            { value: "post", name: "Пошук за post" },
+            { value: "u_id", name: " за робочим ID" },
+            { value: "surname", name: " за прізвищем" },
+            { value: "name", name: " за ім'ям" },
+            { value: "patronymic", name: " по-батькові" },
+            { value: "defects", name: " за к-тю браку" },
           ]}
         />
-        <button
+        
+        {/* <button
           className="btn btn-success mx-3"
           onClick={() => {
             setAddVisible(true);
           }}
         >
           Create Post
-        </button>
-        <hr />
+        </button> */}
+        {/* <hr />
         <ModalForm isVisible={isAddVisible} setVisible={setAddVisible}>
           <CreateWorker setModalState={setAddVisible} />
         </ModalForm>
         <ModalForm isVisible={isChangeVisible} setVisible={setChangeVisible}>
           <ChangeWorker isVisible={isChangeVisible} setModalState={setChangeVisible} postId={postId} />
-        </ModalForm>
+        </ModalForm> */}
   
         <WorkersContext.Provider
           value={{
@@ -99,21 +101,21 @@ import React, {
             setPostId: setPostId,
           }}
         >
-          {loading ? <Loader /> : <WorkersList />}
+          {loading ? <Loader /> : <StaticsList />}
         </WorkersContext.Provider>
         <div>
           <button
             disabled={currentPage === 1}
             onClick={() => handlePageChange(currentPage - 1)}
           >
-            Предыдущая страница
+            Попередня сторінка
           </button>
           <button>{currentPage}</button>
           <button
             disabled={currentPage === Math.ceil(searchedData.length / 10)}
             onClick={() => handlePageChange(currentPage + 1)}
           >
-            Следующая страница
+            Наступна сторінка
           </button>
         </div>
       </Fragment>

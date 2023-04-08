@@ -35,8 +35,14 @@ export const ReportTab = () => {
 
   const sortedData = useMemo(() => {
     if (filter.sortQuery) {
-      return [...data].sort((a, b) =>
-        a[filter.sortQuery].localeCompare(b[filter.sortQuery])
+      return [...data].sort((a, b) => {
+        console.log(typeof(a[filter.sortQuery]));
+        if(typeof(a[filter.sortQuery]) == 'number' && typeof(b[filter.sortQuery]) == 'number') {
+          return data.sort((a, b) => a[filter.sortQuery] - b[filter.sortQuery]);
+        } else {
+          return a[filter.sortQuery].localeCompare(b[filter.sortQuery])
+        }
+      }
       );
     } else {
       return data;
@@ -46,7 +52,7 @@ export const ReportTab = () => {
   const searchedData = useMemo(() => {
     if (filter.searchQuery) {
       return sortedData.filter((data) =>
-        data[filter.searchKey].toLowerCase().includes(filter.searchQuery)
+        data[filter.searchKey].toString().toLowerCase().includes(filter.searchQuery)
       );
     } else {
       return sortedData;
@@ -68,15 +74,10 @@ export const ReportTab = () => {
         filter={filter}
         setFilter={setFilter}
         sortOptions={[
-          { value: "batchID", name: "Пошук за batchID" },
-          { value: "blueprint", name: "Пошук за blueprint" },
-          { value: "detailsNumber", name: "Пошук за detailsNumber" },
-          // { value: "workerID", name: "Пошук за workerID" },
-          { value: "workerSurname", name: "Пошук за workerSurname" },
-          { value: "workerDateStamp", name: "Пошук за workerDateStamp" },
-          // { value: "controllerID", name: "Пошук за controllerID" },
-          { value: "controllerSurname", name: "Пошук за controllerSurname" },
-          { value: "controllerDateStamp", name: "Пошук за controllerDateStamp" },
+          { value: "batchID", name: " за ID партії" },
+          { value: "blueprint", name: " за кресленням" },
+          { value: "detailsNumber", name: " за к-стю деталей" },
+          { value: "status", name: " за статусом" },
         ]}
       />
       <button
@@ -85,7 +86,7 @@ export const ReportTab = () => {
           setAddVisible(true);
         }}
       >
-        Create Post
+        Створити
       </button>
       <hr />
       <ModalForm isVisible={isAddVisible} setVisible={setAddVisible}>
@@ -110,14 +111,14 @@ export const ReportTab = () => {
           disabled={currentPage === 1}
           onClick={() => handlePageChange(currentPage - 1)}
         >
-          Предыдущая страница
+          Попередня сторінка
         </button>
         <button>{currentPage}</button>
         <button
           disabled={currentPage === Math.ceil(searchedData.length / 10)}
           onClick={() => handlePageChange(currentPage + 1)}
         >
-          Следующая страница
+          Наступна сторінка
         </button>
       </div>
     </Fragment>

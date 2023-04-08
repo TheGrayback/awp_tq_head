@@ -9,7 +9,7 @@ const ChangeController = ({ isVisible, setModalState, postId: postData }) => {
     name: postData.name,
     patronymic: postData.patronymic,
     birthdate: postData.birthdate,
-    profession: postData.profession,
+    // profession: postData.profession,
     post: postData.post,
   });
 
@@ -124,7 +124,7 @@ const ChangeController = ({ isVisible, setModalState, postId: postData }) => {
           />
         </div>
       </form>
-      <form onSubmit={submitChangeHandler}>{/*profession*/}
+      {/* <form onSubmit={submitChangeHandler}>
         <label for="profession" className="form-label">
           profession
         </label>
@@ -141,7 +141,7 @@ const ChangeController = ({ isVisible, setModalState, postId: postData }) => {
             }
           />
         </div>
-      </form>
+      </form> */}
       <form onSubmit={submitChangeHandler}>{/*post*/}
         <label for="post" className="form-label">
           post

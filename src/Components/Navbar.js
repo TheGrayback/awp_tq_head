@@ -15,27 +15,27 @@ export const Navbar = () => (
           to="/workers"
           exact="true"
         >
-          Workers
+          Робітники
         </NavLink>
       </li>
       <li className="nav-item">
         <NavLink className="nav-link" aria-current="page" to="/controllers">
-          Controllers
+          Контроллери
         </NavLink>
       </li>
       <li className="nav-item">
         <NavLink className="nav-link" aria-current="page" to="/reports">
-          Reports
+          ДСЕ
         </NavLink>
       </li>
       <li className="nav-item">
         <NavLink className="nav-link" aria-current="page" to="/defects">
-          Defects
+          Брак
         </NavLink>
       </li>
       <li className="nav-item">
         <NavLink className="nav-link" aria-current="page" to="/statistics">
-          Statistics
+          Статистика
         </NavLink>
       </li>
     </ul>
