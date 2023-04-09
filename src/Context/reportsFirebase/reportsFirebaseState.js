@@ -55,12 +55,6 @@ export const ReportsFirebaseState = ({ children }) => {
     batchID, //ID партии деталей
     blueprint,
     detailsNumber,
-    // workerID,
-    // workerSurname,
-    // workerDateStamp,
-    // controllerID,
-    // controllerSurname,
-    // controllerDateStamp,
     all,
     completed,
     status,

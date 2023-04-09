@@ -6,7 +6,7 @@ export const Navbar = () => (
   <nav className="navbar navbar-dark navbar-expand-lg bg-primary justify-content-between">
     <ul className="navbar-nav mx-2">
       <li>
-        <div className="navbar-brand">Note App</div>
+        <div className="navbar-brand mx-2">АРМ НВТК</div>
       </li>
       <li className="nav-item">
         <NavLink
